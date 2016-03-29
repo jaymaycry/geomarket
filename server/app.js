@@ -10,6 +10,8 @@ mongoose.Promise = require('bluebird');
 import config from './config/environment';
 import http from 'http';
 
+import fixtures from 'node-mongoose-fixtures';
+
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
@@ -34,6 +36,18 @@ function startServer() {
 }
 
 setImmediate(startServer);
+
+// Set default node environment to development
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+if (env === 'development' || env === 'test') {
+  // MongoDB fixtures
+  fixtures.reset(mongoose, function() {
+    console.log('fixtures reseted');
+  });
+  fixtures(require('./fixtures/offers.js'), mongoose);
+}
+
 
 // Expose app
 exports = module.exports = app;
