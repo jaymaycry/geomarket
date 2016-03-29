@@ -10,6 +10,7 @@ exports.Offer = [
     startDate: Date.now(),
     endDate: Date.now(),
     viewCounter: 0,
+    comments:[],
     active: true
   },
   {
@@ -23,6 +24,7 @@ exports.Offer = [
     startDate: Date.now(),
     endDate: Date.now(),
     viewCounter: 0,
+    comments:[],
     active: true
   },
   {
@@ -37,6 +39,10 @@ exports.Offer = [
     startDate: Date.now(),
     endDate: Date.now(),
     viewCounter: 0,
+    comments:[ {
+      date: Date.now(),
+      text: "this is an example comment"
+    }],
     active: true
   }
 ];
