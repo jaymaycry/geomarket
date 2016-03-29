@@ -4,9 +4,11 @@ angular.module('geomarketApp', [
   'geomarketApp.auth',
   'geomarketApp.admin',
   'geomarketApp.constants',
+  'geomarketApp.offer',
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngGeolocation',
   'ui.router',
   'ui.bootstrap',
   'validation.match'
