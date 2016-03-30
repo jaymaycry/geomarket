@@ -9,6 +9,7 @@ angular.module('geomarketApp', [
   'ngResource',
   'ngSanitize',
   'ngGeolocation',
+  'ngFileUpload',
   'ui.router',
   'ui.bootstrap',
   'validation.match'
