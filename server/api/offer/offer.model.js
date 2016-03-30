@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 
 var OfferSchema = new mongoose.Schema({
   _creator: { type: mongoose.Schema.ObjectId, ref: 'User' },
+  picture: String,
   name: String,
   description: String,
   loc: {

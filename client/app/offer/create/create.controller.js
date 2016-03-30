@@ -1,10 +1,9 @@
 'use strict';
 (function(){
 
-class OfferComponent {
+class CreateComponent {
   constructor(Offer, $geolocation) {
     this.Offer = Offer;
-    this.offers = [];
     this.position;
     this.$geolocation = $geolocation;
   }
@@ -13,14 +12,15 @@ class OfferComponent {
     this.$geolocation.getCurrentPosition({
       timeout: 60000
     }).then(position => {
-      this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
+      this.offer = new this.Offer();
+      this.offer.loc = [position.coords.longitude, position.coords.latitude];
     });
   }
 }
 
 angular.module('geomarketApp')
-  .component('offer', {
-    templateUrl: 'app/offer/offer.html',
-    controller: OfferComponent
+  .component('create', {
+    templateUrl: 'app/offer/create/create.html',
+    controller: CreateComponent
   });
 })();
