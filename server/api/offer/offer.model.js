@@ -12,9 +12,13 @@ var OfferSchema = new mongoose.Schema({
       index: '2d'
   },
   price: Number,
-  startDate: Date,
-  endDate: Date,
-  viewCounter: Number,
+  startDate: { type: Date, default: Date.now },
+  endDate: { type: Date, default: function() {
+    // Default length of offer -> 12 hours
+    var date = new Date(Date.now());
+    return date.setHours(date.getHours() + 12);
+  }},
+  viewCounter: { type: Number, default: 0 },
   comments: [
     {
       _creator:  { type: mongoose.Schema.ObjectId, ref: 'User' },

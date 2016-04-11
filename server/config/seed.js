@@ -4,10 +4,11 @@
  */
 
 'use strict';
-import Thing from '../api/thing/thing.model';
+//import Thing from '../api/thing/thing.model';
+import Offer from '../api/offer/offer.model';
 import User from '../api/user/user.model';
 
-Thing.find({}).remove()
+/*Thing.find({}).remove()
   .then(() => {
     Thing.create({
       name: 'Development Tools',
@@ -36,6 +37,50 @@ Thing.find({}).remove()
       name: 'Deployment Ready',
       info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
              'and openshift subgenerators'
+    });
+  });*/
+  
+Offer.find({}).remove()
+  .then(() => {
+    Offer.create({
+      name:'Test 1 - ZHAW',
+      description: 'Test 1 Description',
+      loc: [
+        8.5324405,
+        47.3778249
+      ],
+      price: 100,
+      viewCounter: 0,
+      comments:[],
+      active: true
+    },
+    {
+      name:'Test 1 - Enge',
+      description: 'Test 1 Description',
+      loc: [
+        8.5276642,
+        47.3547855
+      ],
+      price: 100,
+      viewCounter: 0,
+      comments:[],
+      active: true
+    },
+    {
+      name:'Test 3 - Richterswil',
+      description: 'Test 3 Description',
+      loc: [
+        8.7043081,
+        47.2074848
+      ],
+      
+      price: 100,
+      viewCounter: 0,
+      comments:[ {
+        date: Date.now(),
+        text: "this is an example comment"
+      }],
+      active: true
     });
   });
 

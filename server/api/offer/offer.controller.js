@@ -59,25 +59,55 @@ function handleError(res, statusCode) {
   };
 }
 
+function checkCreator(req, res) {
+  return function(offer) {
+    if(!offer._creator === req.user._id) {
+      res.status(401).end();
+      return null
+    }
+    return offer;
+  }
+}
+
+function attachComment(req, res) {
+  return function(offer) {
+    req.body._creator = req.user._id;
+    offer.comments.push(req.body);
+    offer.save()
+      .then((updated) => {
+        return updated;
+      });
+  }
+}
+
 // Gets a list of Offers
 export function index(req, res) {
-  // Maximum an Angeboten
+  // max offers to search
   var limit = req.query.limit || 10;
-  // Maximaler Umkreis
+  // max radius for search
   var maxDistance = req.query.distance || 30;
-  // Umrechnung in Radianten
+  // calc to radians
   maxDistance /= 111.19444444;
-  // Standort
+  // geolocation
   var coords = [];
   coords[0] = req.query.longitude;
   coords[1] = req.query.latitude;
-  console.log(coords);
   
   return Offer.find({
+    // search for near offers
     loc: {
           $near: coords,
           $maxDistance: maxDistance
+    },
+    // start date should be in the past
+    startDate: {
+      $lte: Date.now()
+    },
+    // end date should be in the future
+    endDate: {
+      $gte: Date.now()
     }})
+    .limit(limit)
     .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -85,7 +115,8 @@ export function index(req, res) {
 
 // Gets a single Offer from the DB
 export function show(req, res) {
-  return Offer.findById(req.params.id).exec()
+  return Offer.findById(req.params.id)
+    .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -93,7 +124,8 @@ export function show(req, res) {
 
 // Creates a new Offer in the DB
 export function create(req, res) {
-  console.log(req.file);
+  // Attach user id to offer
+  req.body._creator = req.user._id;
   return Offer.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -106,6 +138,7 @@ export function update(req, res) {
   }
   return Offer.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
+    .then(checkCreator(req, res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -115,6 +148,15 @@ export function update(req, res) {
 export function destroy(req, res) {
   return Offer.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
+    .then(checkCreator(req, res))
     .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
+export function commentController(req, res) {
+  return Offer.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(attachComment(req, res))
+    .then(respondWithResult(res))
     .catch(handleError(res));
 }

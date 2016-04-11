@@ -1,5 +1,5 @@
 'use strict';
-
+import * as auth from '../../auth/auth.service';
 var express = require('express');
 var multer  = require('multer');
 var mime = require('mime');
@@ -19,8 +19,8 @@ var router = express.Router();
 
 // Upload file
 router.post('/', upload.single('photo'), function (req, res, next){
-  console.log(req.file);
-  res.json(req.file.path);
+    console.log(req.file);
+    res.json(req.file.path);
 });
 
 // Load file

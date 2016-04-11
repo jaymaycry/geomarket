@@ -7,12 +7,12 @@ var newOffer;
 
 describe('Offer API:', function() {
 
-  describe('GET /api/offers', function() {
+  describe('GET /api/offers when latitude and longitude parameters are set', function() {
     var offers;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/offers')
+        .get('/api/offers?longitude=8.5276642&latitude=47.3547855')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -36,7 +36,7 @@ describe('Offer API:', function() {
         .post('/api/offers')
         .send({
           name: 'New Offer',
-          info: 'This is the brand new offer!!!'
+          description: 'This is the brand new offer!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Offer API:', function() {
 
     it('should respond with the newly created offer', function() {
       expect(newOffer.name).to.equal('New Offer');
-      expect(newOffer.info).to.equal('This is the brand new offer!!!');
+      expect(newOffer.description).to.equal('This is the brand new offer!!!');
     });
 
   });
@@ -79,7 +79,7 @@ describe('Offer API:', function() {
 
     it('should respond with the requested offer', function() {
       expect(offer.name).to.equal('New Offer');
-      expect(offer.info).to.equal('This is the brand new offer!!!');
+      expect(offer.description).to.equal('This is the brand new offer!!!');
     });
 
   });
@@ -92,7 +92,7 @@ describe('Offer API:', function() {
         .put('/api/offers/' + newOffer._id)
         .send({
           name: 'Updated Offer',
-          info: 'This is the updated offer!!!'
+          description: 'This is the updated offer!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -111,7 +111,7 @@ describe('Offer API:', function() {
 
     it('should respond with the updated offer', function() {
       expect(updatedOffer.name).to.equal('Updated Offer');
-      expect(updatedOffer.info).to.equal('This is the updated offer!!!');
+      expect(updatedOffer.description).to.equal('This is the updated offer!!!');
     });
 
   });

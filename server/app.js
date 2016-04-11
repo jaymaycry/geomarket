@@ -38,7 +38,7 @@ setImmediate(startServer);
 
 // Set default node environment to development
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
+/*
 if (env === 'development' || env === 'test') {
   // MongoDB fixtures
   fixtures.reset(mongoose, function() {
@@ -46,7 +46,7 @@ if (env === 'development' || env === 'test') {
   });
   fixtures(require('./fixtures/offers.js'), mongoose);
 }
-
+*/
 
 // Expose app
 exports = module.exports = app;

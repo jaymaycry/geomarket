@@ -1,7 +1,7 @@
 <form class="form-horizontal" enctype="multipart/form-data" name="form">
   
   
-  <div class="button" ngf-select ng-model="$ctrl.file" name="photo" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"  ngf-resize="{width: 420, height: 420}" capture="camera">Select</div>
+  <div class="button" ngf-select ng-model="$ctrl.file" name="photo" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"  ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera">Select</div>
   Image thumbnail: <img ngf-thumbnail="$ctrl.file">
   
   
