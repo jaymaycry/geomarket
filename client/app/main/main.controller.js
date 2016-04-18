@@ -4,11 +4,12 @@
 
     class MainController {
         
-        constructor($http,Upload,$geolocation,Offer) {
+        constructor($http,Upload,$geolocation,Offer,$state) {
             this.$http = $http;
             this.Upload = Upload;
             this.position;
             this.$geolocation = $geolocation;
+            this.$state=$state;
             this.Offer = Offer;
             this.offers = [];
             this.options={};
@@ -36,7 +37,9 @@
         }
 
         uploadPicture(file){
-            alert("when?")
+            if(file){
+                this.$state.go("createOffering",{obj: file});
+            }
         
         
         }

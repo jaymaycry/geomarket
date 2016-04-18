@@ -5,6 +5,9 @@ angular.module('geomarketApp')
     $stateProvider
       .state('createOffering', {
         url: '/createOffering',
-        template: '<create-offering></create-offering>'
+        template: '<create-offering></create-offering>',
+        params:{
+            obj:null
+        }
       });
   });
