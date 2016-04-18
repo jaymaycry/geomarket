@@ -2,35 +2,68 @@
 
 (function() {
 
-class MainController {
+    class MainController {
+        
+        constructor($http,Upload,$geolocation,Offer) {
+            this.$http = $http;
+            this.Upload = Upload;
+            this.position;
+            this.$geolocation = $geolocation;
+            this.Offer = Offer;
+            this.offers = [];
+            this.options={};
+            this.userMap;
+            this.marker;
+            //this.awesomeThings = [];
+        }
 
-  constructor($http) {
-    this.$http = $http;
-    this.awesomeThings = [];
-  }
+        $onInit() {
+            /*this.$http.get('/api/things').then(response => {
+              this.awesomeThings = response.data;
+              });*/
+            this.$geolocation.getCurrentPosition({
+                timeout: 60000
+                    
+            }).then(position => {
+                this.options.zoom = 13;
+                this.options.center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
+                this.userMap = new google.maps.Map(map,this.options);
+                this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
 
-  $onInit() {
-    this.$http.get('/api/things').then(response => {
-      this.awesomeThings = response.data;
-    });
-  }
+            });
 
-  addThing() {
-    if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
-      this.newThing = '';
+        }
+
+        uploadPicture(file){
+            alert("when?")
+        
+        
+        }
+        
+        setMarker(){
+            console.log("is set");
+                console.log(this.offers.length);
+        };
+            //angular.element('#input_camera').trigger('click');
+
+        /*  addThing() {
+            if (this.newThing) {
+            this.$http.post('/api/things', { name: this.newThing });
+            this.newThing = '';
+            }
+            }*/
+
+        /*  deleteThing(thing) {
+            this.$http.delete('/api/things/' + thing._id);
+            }*/
+
     }
-  }
 
-  deleteThing(thing) {
-    this.$http.delete('/api/things/' + thing._id);
-  }
-}
-
-angular.module('geomarketApp')
-  .component('main', {
-    templateUrl: 'app/main/main.html',
-    controller: MainController
-  });
+    angular.module('geomarketApp')
+        .component('main', {
+            templateUrl: 'app/main/main.html',
+            controller: MainController
+        });
 
 })();

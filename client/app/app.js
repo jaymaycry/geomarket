@@ -12,7 +12,8 @@ angular.module('geomarketApp', [
   'ngFileUpload',
   'ui.router',
   'ui.bootstrap',
-  'validation.match'
+  'validation.match',
+  'uiGmapgoogle-maps'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

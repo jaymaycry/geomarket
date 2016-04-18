@@ -1,18 +1,28 @@
-<div class ="container" id ="map">
+<div class ="container" >
+    <div id ="map" ng-model="$ctrl.map" ></div>
 
 </div>
 
-<div class ="container" id ="offerList"> 
+<div class ="container"> 
+    <ul class="list-group">
+        <li ng-repeat="offer in $ctrl.offers" class="list-group-item" >
+            </h2>{{offer.name}}</h2>
+            <p>{{offer.description}}</p>
+        </li>
+    </ul>
 </div>
 <div class = 'cameraButton'>
     <div class="container" id= "capture">
         <div class = 'image-upload'>
-            <input type="file" name="input_camera" id="input_camera" accept="image/*" capture=amera" ng-model="input_camera"> 
+            <input type="file" name="input_camera" id="input_camera"
+            accept="image/*" capture=camera"  > 
         </div>
-        <button id="btn-camera-upload" type="button" class="btn btn-inverse btn-lg" >
+        <button id="btn-camera-upload" type="button" class="btn btn-inverse
+            btn-lg" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'"capture="camera">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
         </button>   
     </div>
 </div>
+<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
