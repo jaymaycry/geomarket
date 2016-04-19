@@ -1,12 +1,47 @@
 'use strict';
 
 var app = require('../..');
+import User from '../user/user.model';
 import request from 'supertest';
 
 var newOffer;
 
 describe('Offer API:', function() {
+  var user;
+  var token;
+  // Clear users before testing
+  before(function() {
+    return User.remove().then(function() {
+      user = new User({
+        name: 'Fake User',
+        email: 'test@example.com',
+        password: 'password'
+      });
+      
+      return user.save();
+    });
+  });
 
+  before(function(done) {
+    request(app)
+      .post('/auth/local')
+      .send({
+        email: 'test@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        token = res.body.token;
+        done();
+      });
+  });
+
+  // Clear users after testing
+  after(function() {
+    return User.remove();
+  });
+  
   describe('GET /api/offers when latitude and longitude parameters are set', function() {
     var offers;
 
@@ -34,6 +69,7 @@ describe('Offer API:', function() {
     beforeEach(function(done) {
       request(app)
         .post('/api/offers')
+        .set('authorization', 'Bearer ' + token)
         .send({
           name: 'New Offer',
           description: 'This is the brand new offer!!!'
@@ -90,6 +126,7 @@ describe('Offer API:', function() {
     beforeEach(function(done) {
       request(app)
         .put('/api/offers/' + newOffer._id)
+        .set('authorization', 'Bearer ' + token)
         .send({
           name: 'Updated Offer',
           description: 'This is the updated offer!!!'
@@ -115,12 +152,33 @@ describe('Offer API:', function() {
     });
 
   });
+  
+  
+  describe('PUT /api/offers/:id/comment', function() {
+    
+    it('should respond with the updated offer containing the comment', function() {
+      request(app)
+        .put('/api/offers/' + newOffer._id + '/comment')
+        .set('authorization', 'Bearer ' + token)
+        .send({
+          text: "This is the first comment!"
+        })
+        .expect(200)
+        .end((err, res) =>  {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+  });
 
   describe('DELETE /api/offers/:id', function() {
 
     it('should respond with 204 on successful removal', function(done) {
       request(app)
         .delete('/api/offers/' + newOffer._id)
+        .set('authorization', 'Bearer ' + token)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -133,6 +191,7 @@ describe('Offer API:', function() {
     it('should respond with 404 when offer does not exist', function(done) {
       request(app)
         .delete('/api/offers/' + newOffer._id)
+        .set('authorization', 'Bearer ' + token)
         .expect(404)
         .end((err, res) => {
           if (err) {
