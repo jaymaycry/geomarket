@@ -9,3 +9,13 @@ dist
 npm-debug.log
 coverage
 uploads
+client/packages/Microsoft.ApplicationInsights.Web.1.2.3/
+client/packages/Microsoft.ApplicationInsights.1.2.3/
+client/packages/Microsoft.ApplicationInsights.DependencyCollector.1.2.3/
+client/packages/Microsoft.ApplicationInsights.JavaScript.0.15.0-build58334/
+client/packages/Microsoft.ApplicationInsights.WindowsServer.1.2.3/
+client/packages/Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.1.2.3/
+client/packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0/
+client/packages/Microsoft.ApplicationInsights.PerfCounterCollector.1.2.3/
+client/packages/Microsoft.Net.Compilers.1.0.0/
+client/packages/Microsoft.ApplicationInsights.Agent.Intercept.1.2.0/
