@@ -60,12 +60,14 @@ function handleError(res, statusCode) {
 }
 
 function checkCreator(req, res) {
-  return function(offer) {
-    if(!offer._creator === req.user._id) {
-      res.status(401).end();
-      return null
+  return function(entity) {
+    if (entity) {
+      if (!req.user._id.equals(entity._creator)) {
+        res.status(401).end();
+        return null
+      }
+      return entity;
     }
-    return offer;
   }
 }
 
@@ -83,7 +85,7 @@ function attachComment(req, res) {
 // Gets a list of Offers
 export function index(req, res) {
   // max offers to search
-  var limit = req.query.limit || 10;
+  // var limit = req.query.limit || 10;
   // max radius for search
   var maxDistance = req.query.distance || 30;
   // calc to radians
@@ -107,7 +109,7 @@ export function index(req, res) {
     endDate: {
       $gte: Date.now()
     }})
-    .limit(limit)
+    //.limit(limit)
     .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -154,6 +156,8 @@ export function destroy(req, res) {
 }
 
 export function commentController(req, res) {
+  // Attach user id to comment
+  req.body._creator = req.user._id;
   return Offer.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(attachComment(req, res))
