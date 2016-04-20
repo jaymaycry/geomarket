@@ -44,19 +44,20 @@ describe('Upload API:', function() {
 
   describe('POST /uploads', function() {
     
-    it('should respond with the newly uploaded filename', function() {
+    it('should respond with the newly uploaded filename', function(done) {
+      this.timeout(10000);
+      
       request(app)
         .post('/uploads')
+        .attach('photo', 'server/api/upload/fixtures/example.jpg')
         .set('authorization', 'Bearer ' + token)
-        .attach('Fixture', 'server/api/upload/fixtures/example.jpg')
-        .expect(200)
-        .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
+            console.log(err);
             return done(err);
           }
-          expect(res.status).to.equal(200);
           console.log(res.body);
+          expect(res.status).to.equal(200);
           picturePath = res.body;
           done();
         });
@@ -66,16 +67,14 @@ describe('Upload API:', function() {
 
   describe('GET /uploads/:id', function() {
 
-    it('should respond with the requested file', function() {
+    it('should respond with the requested file', function(done) {
+      this.timeout(10000);
       request(app)
-        .get('/uploads/photo-1461019342663-57154122-0ecc-4773-84cb-075ce979db8c.jpeg')//'/uploads/' + picturePath)
-        .expect(200)
-        .expect('Content-Type', /json/)
+        .get('/uploads/' + picturePath)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          offer = res.body;
           done();
         });
     });
