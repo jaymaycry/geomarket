@@ -55,7 +55,7 @@ export function hasRole(roleRequired) {
           config.userRoles.indexOf(roleRequired)) {
         next();
       } else {
-        res.status(403).send(swagger.apiError('Forbidden'));
+        res.status(403).send(swagger.apiError('Forbidden.'));
       }
     });
 }
