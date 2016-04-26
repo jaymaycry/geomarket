@@ -51,13 +51,13 @@ export function create(req, res, next) {
 /**
  * Creates a anonymous user
  */
-export function create_anonymous(req, res, next) {
+export function createAnonymous(req, res, next) {
 
   function randString(x){
     var s = "";
-    while(s.length<x&&x>0){
+    while(s.length < x && x >0){
       var r = Math.random();
-      s+= (r<0.1?Math.floor(r*100):String.fromCharCode(Math.floor(r*26) + (r>0.5?97:65)));
+      s+= (r < 0.1 ? Math.floor(r*100):String.fromCharCode(Math.floor(r*26) + (r>0.5?97:65)));
     }
     return s;
   }
@@ -70,7 +70,7 @@ export function create_anonymous(req, res, next) {
     name: username,
     email: username + '@anonymous.com',
     role: 'anonymous',
-    password: this.password
+    password: password
   });
 
   newUser.save()

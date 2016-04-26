@@ -94,15 +94,15 @@ describe('User API Router:', function() {
 
   });
 
-  describe('POST /api/anonymous_users', function() {
-
-    it('should route to user.controller.create_anonymous', function() {
-      expect(routerStub.post
-        .withArgs('/', 'userCtrl.create_anonymous')
-      ).to.have.been.calledOnce;
-    });
-
-  });
+  //describe('POST /api/anonymous_users', function() {
+  //
+  //  it('should route to user.controller.create_anonymous', function() {
+  //    expect(routerStub.post
+  //      .withArgs('/', 'userCtrl.create_anonymous')
+  //    ).to.have.been.calledOnce;
+  //  });
+  //
+  //});
 
 
   describe('POST /api/users', function() {
