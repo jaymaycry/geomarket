@@ -5,8 +5,8 @@
 
 <div class ="container"> 
     <ul class="list-group">
-        <li ng-repeat="offer in $ctrl.offers" class="list-group-item" >
-            </h2>{{offer.name}}</h2>
+        <li ng-repeat="offer in $ctrl.offers" class="list-group-item" ng-init="$ctrl.setMarker(offer)">
+            <h2  >{{offer.name}}</h2>
             <p>{{offer.description}}</p>
         </li>
     </ul>
@@ -18,7 +18,9 @@
             accept="image/*" capture=camera"  > 
         </div>
         <button id="btn-camera-upload" type="button" class="btn btn-inverse
-            btn-lg" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'"capture="camera">
+            btn-lg" ngf-select="$ctrl.uploadPicture($file)"
+            ng-model="$ctrl.file" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"  ngf-resize="{width: 420, height: 420, centerCrop:true}"  capture="camera">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
         </button>   
