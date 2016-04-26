@@ -31,7 +31,12 @@
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
+                console.log("position");
 
+            }).then(marker => {
+                console.log("marker");
+                console.log(this.offers.length);
+            
             });
 
         }
@@ -44,11 +49,18 @@
         
         }
         
-        setMarker(){
-            console.log("is set");
-                console.log(this.offers.length);
+        setMarker(offer){
+				var marker = new google.maps.Marker({
+					map: this.userMap,
+					animation: google.maps.Animation.DROP,
+					position: new google.maps.LatLng(offer.loc[1],offer.loc[0]),
+                    visible: true
+				});
+				
+
+            //marker.setMap(this.userMap);
         };
-            //angular.element('#input_camera').trigger('click');
+        //angular.element('#input_camera').trigger('click');
 
         /*  addThing() {
             if (this.newThing) {
@@ -60,7 +72,6 @@
         /*  deleteThing(thing) {
             this.$http.delete('/api/things/' + thing._id);
             }*/
-
     }
 
     angular.module('geomarketApp')
