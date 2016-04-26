@@ -8,81 +8,7 @@
 import Offer from '../api/offer/offer.model';
 import User from '../api/user/user.model';
 
-/*Thing.find({}).remove()
-  .then(() => {
-    Thing.create({
-      name: 'Development Tools',
-      info: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
-             'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
-             'Stylus, Sass, and Less.'
-    }, {
-      name: 'Server and Client integration',
-      info: 'Built with a powerful and fun stack: MongoDB, Express, ' +
-             'AngularJS, and Node.'
-    }, {
-      name: 'Smart Build System',
-      info: 'Build system ignores `spec` files, allowing you to keep ' +
-             'tests alongside code. Automatic injection of scripts and ' +
-             'styles into your index.html'
-    }, {
-      name: 'Modular Structure',
-      info: 'Best practice client and server structures allow for more ' +
-             'code reusability and maximum scalability'
-    }, {
-      name: 'Optimized Build',
-      info: 'Build process packs up your templates as a single JavaScript ' +
-             'payload, minifies your scripts/css/images, and rewrites asset ' +
-             'names for caching.'
-    }, {
-      name: 'Deployment Ready',
-      info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
-             'and openshift subgenerators'
-    });
-  });*/
-  
-Offer.find({}).remove()
-  .then(() => {
-    Offer.create({
-      name:'Test 1 - ZHAW',
-      description: 'Test 1 Description',
-      loc: [
-        8.5324405,
-        47.3778249
-      ],
-      price: 100,
-      viewCounter: 0,
-      comments:[],
-      active: true
-    },
-    {
-      name:'Test 1 - Enge',
-      description: 'Test 1 Description',
-      loc: [
-        8.5276642,
-        47.3547855
-      ],
-      price: 100,
-      viewCounter: 0,
-      comments:[],
-      active: true
-    },
-    {
-      name:'Test 3 - Richterswil',
-      description: 'Test 3 Description',
-      loc: [
-        8.7043081,
-        47.2074848
-      ],
-      
-      price: 100,
-      viewCounter: 0,
-      comments:[ {
-        date: Date.now(),
-        text: "this is an example comment"
-      }],
-      active: true
-    });
-  });
+var creatorId = "";
 
 User.find({}).remove()
   .then(() => {
@@ -98,7 +24,58 @@ User.find({}).remove()
       email: 'admin@example.com',
       password: 'admin'
     })
-    .then(() => {
+    .then((user) => {
       console.log('finished populating users');
+      creatorId = user._id;
+      
+      Offer.find({}).remove()
+        .then(() => {
+          Offer.create({
+            _creator: creatorId,
+            name: 'Test 1 - ZHAW',
+            description: 'Test 1 Description',
+            loc: [
+              8.5324405,
+              47.3778249
+            ],
+            price: 100,
+            viewCounter: 0,
+            comments:[],
+            active: true
+          },
+          {
+            _creator: creatorId,
+            name:'Test 1 - Enge',
+            description: 'Test 1 Description',
+            loc: [
+              8.5276642,
+              47.3547855
+            ],
+            price: 100,
+            viewCounter: 0,
+            comments:[],
+            active: true
+          },
+          {
+            _creator: creatorId,
+            name:'Test 3 - Richterswil',
+            description: 'Test 3 Description',
+            loc: [
+              8.7043081,
+              47.2074848
+            ],
+            
+            price: 100,
+            viewCounter: 0,
+            comments:[ {
+              date: Date.now(),
+              text: "this is an example comment"
+            }],
+            active: true
+          })
+          .then(() => {
+            console.log("finished populating offers");
+          });
+        });
     });
   });

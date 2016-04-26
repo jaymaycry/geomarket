@@ -139,6 +139,29 @@ describe('Offer API:', function() {
         });
     });
   });
+  
+  describe('GET /api/offers/my', function() {
+    var offers;
+
+    beforeEach(function(done) {
+      request(app)
+        .get('/api/offers/my')
+        .set('authorization', 'Bearer ' + token)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          offers = res.body;
+          done();
+        });
+    });
+
+    it('should respond with JSON array', function() {
+      expect(offers).to.be.instanceOf(Array);
+    });
+  });
 
   describe('DELETE /api/offers/:id', function() {
 
