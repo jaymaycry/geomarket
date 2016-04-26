@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 import compose from 'composable-middleware';
 import User from '../api/user/user.model';
+import swagger from '../swagger';
 
 var validateJwt = expressJwt({
   secret: config.secrets.session
@@ -30,7 +31,7 @@ export function isAuthenticated() {
       User.findById(req.user._id).exec()
         .then(user => {
           if (!user) {
-            return res.status(401).end();
+            return res.status(401).send(swagger.apiError("Not authenticated."));
           }
           req.user = user;
           next();
@@ -54,7 +55,7 @@ export function hasRole(roleRequired) {
           config.userRoles.indexOf(roleRequired)) {
         next();
       } else {
-        res.status(403).send('Forbidden');
+        res.status(403).send(swagger.apiError('Forbidden.'));
       }
     });
 }
@@ -73,7 +74,7 @@ export function signToken(id, role) {
  */
 export function setTokenCookie(req, res) {
   if (!req.user) {
-    return res.status(404).send('It looks like you aren\'t logged in, please try again.');
+    return res.status(404).send(swagger.apiError('It looks like you aren\'t logged in, please try again.'));
   }
   var token = signToken(req.user._id, req.user.role);
   res.cookie('token', token);

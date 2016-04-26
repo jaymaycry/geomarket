@@ -75,16 +75,6 @@ describe('Offer API Router:', function() {
 
   });
 
-  describe('PUT /api/offers/:id', function() {
-
-    it('should be authenticated and route to offer.controller.update', function() {
-      expect(routerStub.put
-        .withArgs('/:id', 'authService.isAuthenticated', 'offerCtrl.update')
-        ).to.have.been.calledOnce;
-    });
-
-  });
-
   describe('PATCH /api/offers/:id', function() {
 
     it('should be authenticated and route to offer.controller.update', function() {

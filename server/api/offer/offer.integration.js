@@ -119,39 +119,6 @@ describe('Offer API:', function() {
     });
 
   });
-
-  describe('PUT /api/offers/:id', function() {
-    var updatedOffer;
-
-    beforeEach(function(done) {
-      request(app)
-        .put('/api/offers/' + newOffer._id)
-        .set('authorization', 'Bearer ' + token)
-        .send({
-          name: 'Updated Offer',
-          description: 'This is the updated offer!!!'
-        })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          updatedOffer = res.body;
-          done();
-        });
-    });
-
-    afterEach(function() {
-      updatedOffer = {};
-    });
-
-    it('should respond with the updated offer', function() {
-      expect(updatedOffer.name).to.equal('Updated Offer');
-      expect(updatedOffer.description).to.equal('This is the updated offer!!!');
-    });
-
-  });
   
   
   describe('PUT /api/offers/:id/comment', function() {

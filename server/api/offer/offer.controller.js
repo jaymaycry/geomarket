@@ -11,6 +11,8 @@
 
 import _ from 'lodash';
 import Offer from './offer.model';
+import swagger from '../../swagger';
+import swaggerdoc from './offer.swagger';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -36,7 +38,7 @@ function removeEntity(res) {
     if (entity) {
       return entity.remove()
         .then(() => {
-          res.status(204).end();
+          res.status(204).send(swagger.apiMessage("Offer deleted."));
         });
     }
   };
@@ -45,7 +47,7 @@ function removeEntity(res) {
 function handleEntityNotFound(res) {
   return function(entity) {
     if (!entity) {
-      res.status(404).end();
+      res.status(404).send(swagger.apiError("Offer not found."));
       return null;
     }
     return entity;
@@ -55,7 +57,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
-    res.status(statusCode).send(err);
+    res.status(statusCode).send(swagger.apiError(err.toString()));
   };
 }
 
@@ -63,7 +65,7 @@ function checkCreator(req, res) {
   return function(entity) {
     if (entity) {
       if (!req.user._id.equals(entity._creator)) {
-        res.status(401).end();
+        res.status(401).send(swagger.apiError("Only creator can edit this."));
         return null
       }
       return entity;
@@ -82,6 +84,7 @@ function attachComment(req, res) {
   }
 }
 
+swagger.noteEndpoint('/api/offers', swaggerdoc.query, "Offer");
 // Gets a list of Offers
 export function index(req, res) {
   // max offers to search
@@ -115,6 +118,7 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.get, "Offer");
 // Gets a single Offer from the DB
 export function show(req, res) {
   return Offer.findById(req.params.id)
@@ -123,7 +127,7 @@ export function show(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
-
+swagger.noteEndpoint('/api/offers', swaggerdoc.post, "Offer");
 // Creates a new Offer in the DB
 export function create(req, res) {
   // Attach user id to offer
@@ -132,6 +136,7 @@ export function create(req, res) {
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.patch, "Offer");
 
 // Updates an existing Offer in the DB
 export function update(req, res) {
@@ -146,6 +151,7 @@ export function update(req, res) {
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.delete, "Offer");
 // Deletes a Offer from the DB
 export function destroy(req, res) {
   return Offer.findById(req.params.id).exec()
@@ -155,6 +161,7 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/{id}/comment', swaggerdoc.addComment, "Offer");
 export function commentController(req, res) {
   // Attach user id to comment
   req.body._creator = req.user._id;
