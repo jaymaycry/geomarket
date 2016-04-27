@@ -90,6 +90,81 @@ module.exports = {
       }
     }
   },
+my: {
+    'get': {
+      summary: 'Returns all offers of the current user.',
+      description: '',
+      operationId: 'my',
+      parameters: [],
+      responses: {
+        "200": {
+          "description": "Set of Offer instances within a radius around the users location.",
+          "schema": {
+            "type":"array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "loc": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "price": {
+                  "type": "number"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "__v": {
+                  "type": "number"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_creator": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "viewCounter": {
+                  "type": "number"
+                },
+                "endDate": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "picture": {
+                  "type": "string"
+                } 
+              }
+            }
+          }  
+        },
+        "500": swagger.errorResponse("Error.")
+      }
+    }
+  },
   get: {
     'get': {
       summary: 'Returns an Offer.',

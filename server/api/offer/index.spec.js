@@ -8,7 +8,8 @@ var offerCtrlStub = {
   create: 'offerCtrl.create',
   update: 'offerCtrl.update',
   destroy: 'offerCtrl.destroy',
-  commentController: 'offerCtrl.commentController'
+  addComment: 'offerCtrl.addComment',
+  my: 'offerCtrl.my'
 };
 
 var authServiceStub = {
@@ -64,6 +65,16 @@ describe('Offer API Router:', function() {
     });
 
   });
+  
+  describe('GET /api/offers/my', function() {
+
+    it('should route to offer.controller.my', function() {
+      expect(routerStub.get
+        .withArgs('/my', 'authService.isAuthenticated', 'offerCtrl.my')
+        ).to.have.been.calledOnce;
+    });
+
+  });
 
   describe('POST /api/offers', function() {
 
@@ -95,11 +106,11 @@ describe('Offer API Router:', function() {
 
   });
   
-  describe('PUT /api/offers/:id/comment', function() {
+  describe('PUT /api/offers/:id/addComment', function() {
 
-    it('should be authenticated and route to offer.controller.commentController', function() {
+    it('should be authenticated and route to offer.controller.addComment', function() {
       expect(routerStub.put
-        .withArgs('/:id/comment', 'authService.isAuthenticated', 'offerCtrl.commentController')
+        .withArgs('/:id/comment', 'authService.isAuthenticated', 'offerCtrl.addComment')
         ).to.have.been.calledOnce;
     });
 
