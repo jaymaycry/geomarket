@@ -34,7 +34,7 @@ export function isAuthenticated() {
             return res.status(401).send(swagger.apiError("Not authenticated."));
           }
           req.user = user;
-          next();
+          return next();
         })
         .catch(err => next(err));
     });
