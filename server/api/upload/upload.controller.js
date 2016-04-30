@@ -21,14 +21,14 @@ function uploadFile(req, res, next){
 swagger.noteEndpoint('/uploads/{filename}', swaggerdoc.get, "Uploads");
 // Load file
 function getFile(req, res) {
-  var filePath = path.join('./uploads', req.params.id);
-  
+  var filePath = req.params.id;
+
   // todo: fix mime type
   //var storedMimeType = mime.lookup(filePath);
 
-  res.setHeader('Content-Type', storedMimeType)
-  
-  var gfs = new Grid(config.mongo.uri);
+  console.log(JSON.stringify(config.mongo));
+
+  var gfs = new Grid(mongoose.connection);
 
   var readStream = gfs.createReadStream(filePath);
 
