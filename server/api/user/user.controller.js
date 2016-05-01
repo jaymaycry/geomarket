@@ -55,7 +55,7 @@ export function create(req, res, next) {
 /**
  * Creates a new anonymous user
  */
-swagger.noteEndpoint('/api/users/anonymous', swaggerdoc.show, "User");
+swagger.noteEndpoint('/api/users/anonymous', swaggerdoc.createAnonymous, "User");
 export function createAnonymous(req, res, next) {
 
   function randString(x){
