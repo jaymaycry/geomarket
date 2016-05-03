@@ -68,6 +68,38 @@ describe('User API:', function() {
     return User.remove();
   });
 
+
+  describe('GET /api/users/', function() {
+    
+    it('should respond with user list if requester has admin rights', function(done) {
+      request(app)
+      .get('/api/users/')
+      .set('authorization', 'Bearer ' + adminToken)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.body).to.be.instanceOf(Array);
+        done();
+      });
+    });
+    
+    it('should respond with 403 if requester has no admin rights', function(done) {
+      request(app)
+      .get('/api/users/')
+      .set('authorization', 'Bearer ' + token)
+      .expect(403)
+      .expect('Content-Type', /json/)
+      .end((err,res) => {
+        if (err) { done(err); }
+        done();
+      });
+    });
+    
+  });
+
   describe('GET /api/users/me', function() {
 
     it('should respond with a user profile when authenticated', function(done) {
@@ -77,7 +109,9 @@ describe('User API:', function() {
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          expect(res.body._id.toString()).to.equal(user._id.toString());
+          if (err) {
+            done(err);
+          }
           done();
         });
     });
@@ -94,11 +128,8 @@ describe('User API:', function() {
     
     it('should respond with an anonymous user token', function(done) {
       request(app)
-      .post('/auth/local')
-      .send({
-        email: 'admin@example.com',
-        password: 'password'
-      })
+      .post('/api/users/anonymous')
+      .send({})
       .expect(200)
       .expect('Content-Type', /json/)
       .end((err, res) => {
@@ -106,5 +137,6 @@ describe('User API:', function() {
         done();
       });
     });
+    
   });
 });
