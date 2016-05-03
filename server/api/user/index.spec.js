@@ -8,7 +8,8 @@ var userCtrlStub = {
   me: 'userCtrl.me',
   changePassword: 'userCtrl.changePassword',
   show: 'userCtrl.show',
-  create: 'userCtrl.create'
+  create: 'userCtrl.create',
+  createAnonymous: 'userCtrl.createAnonymous'
 };
 
 var authServiceStub = {
@@ -94,11 +95,23 @@ describe('User API Router:', function() {
 
   });
 
+
   describe('POST /api/users', function() {
 
     it('should route to user.controller.create', function() {
       expect(routerStub.post
         .withArgs('/', 'userCtrl.create')
+        ).to.have.been.calledOnce;
+    });
+
+  });
+  
+  
+  describe('POST /api/users/anonymous', function() {
+
+    it('should route to user.controller.createAnonymous', function() {
+      expect(routerStub.post
+        .withArgs('/anonymous', 'userCtrl.createAnonymous')
         ).to.have.been.calledOnce;
     });
 

@@ -53,6 +53,42 @@ export function create(req, res, next) {
 }
 
 /**
+ * Creates a new anonymous user
+ */
+swagger.noteEndpoint('/api/users/anonymous', swaggerdoc.createAnonymous, "User");
+export function createAnonymous(req, res, next) {
+
+  function randString(x){
+    var s = "";
+    while(s.length < x && x >0){
+      var r = Math.random();
+      s+= (r < 0.1 ? Math.floor(r*100):String.fromCharCode(Math.floor(r*26) + (r>0.5?97:65)));
+    }
+    return s;
+  }
+
+  var username = 'user' + randString(5);
+  var password = randString(8);
+
+  var newUser = new User({
+    provider: 'local',
+    name: username,
+    email: username + '@anonymous.com',
+    role: 'anonymous',
+    password: password
+  });
+
+  newUser.save()
+    .then(function(user) {
+      var token = jwt.sign({ _id: user._id }, config.secrets.session, {
+        expiresIn: 60 * 60 * 5
+      });
+      res.json({ token });
+    })
+    .catch(validationError(res));
+}
+
+/**
  * Get a single user
  */
 swagger.noteEndpoint('/api/users/{id}', swaggerdoc.show, "User");

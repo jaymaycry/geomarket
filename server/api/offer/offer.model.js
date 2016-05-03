@@ -27,6 +27,8 @@ var OfferSchema = new mongoose.Schema({
     }
   ],
   active: Boolean
+},{
+  timestamps: true
 });
 
 export default mongoose.model('Offer', OfferSchema);

@@ -118,6 +118,15 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/my', swaggerdoc.my, "Offer");
+// Get all Offers of the request-user from the DB
+export function my(req, res) {
+  return Offer.find({ _creator: req.user._id })
+    .exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.get, "Offer");
 // Gets a single Offer from the DB
 export function show(req, res) {
@@ -127,6 +136,7 @@ export function show(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
+
 swagger.noteEndpoint('/api/offers', swaggerdoc.post, "Offer");
 // Creates a new Offer in the DB
 export function create(req, res) {
@@ -136,8 +146,8 @@ export function create(req, res) {
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
-swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.patch, "Offer");
 
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.patch, "Offer");
 // Updates an existing Offer in the DB
 export function update(req, res) {
   if (req.body._id) {
@@ -162,7 +172,7 @@ export function destroy(req, res) {
 }
 
 swagger.noteEndpoint('/api/offers/{id}/comment', swaggerdoc.addComment, "Offer");
-export function commentController(req, res) {
+export function addComment(req, res) {
   // Attach user id to comment
   req.body._creator = req.user._id;
   return Offer.findById(req.params.id).exec()

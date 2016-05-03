@@ -6,6 +6,8 @@ import request from 'supertest';
 
 describe('User API:', function() {
   var user;
+  var token;
+  var adminToken;
 
   // Clear users before testing
   before(function() {
@@ -19,6 +21,47 @@ describe('User API:', function() {
       return user.save();
     });
   });
+  
+  before(function() {
+    var admin = new User({
+      name: 'Fake admin',
+      email: 'admin@example.com',
+      password: 'password',
+      role: 'admin'
+    });
+    
+    return admin.save();
+  });
+  
+  before(function(done) {
+    request(app)
+      .post('/auth/local')
+      .send({
+        email: 'test@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        token = res.body.token;
+        done();
+      });
+  });
+  
+  before(function(done) {
+    request(app)
+      .post('/auth/local')
+      .send({
+        email: 'admin@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        adminToken = res.body.token;
+        done();
+      });
+  });
 
   // Clear users after testing
   after(function() {
@@ -26,22 +69,6 @@ describe('User API:', function() {
   });
 
   describe('GET /api/users/me', function() {
-    var token;
-
-    before(function(done) {
-      request(app)
-        .post('/auth/local')
-        .send({
-          email: 'test@example.com',
-          password: 'password'
-        })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          token = res.body.token;
-          done();
-        });
-    });
 
     it('should respond with a user profile when authenticated', function(done) {
       request(app)
@@ -60,6 +87,24 @@ describe('User API:', function() {
         .get('/api/users/me')
         .expect(401)
         .end(done);
+    });
+  });
+  
+  describe('POST /api/users/anonymous', function() {
+    
+    it('should respond with an anonymous user token', function(done) {
+      request(app)
+      .post('/auth/local')
+      .send({
+        email: 'admin@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        expect(res.body.token).to.be.ok;
+        done();
+      });
     });
   });
 });

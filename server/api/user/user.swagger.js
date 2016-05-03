@@ -131,6 +131,28 @@ module.exports = {
       }
     }
   },
+  createAnonymous: {
+    'post': {
+      summary: 'Creates an anonymous User.',
+      description: '',
+      operationId: 'createAnonymous',
+      parameters: [],
+      responses: {
+        "200": {
+          "description": "Session token.",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              } 
+            }
+          }  
+        },
+        "422": swagger.errorResponse("Error.")
+      }
+    }
+  },
   changePassword: {
     'put': {
       summary: 'Updates a user password.',
