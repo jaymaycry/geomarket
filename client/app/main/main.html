@@ -3,14 +3,21 @@
 
 </div>
 
-<div class ="container"> 
-    <ul class="list-group">
-        <li ng-repeat="offer in $ctrl.offers" class="list-group-item" ng-init="$ctrl.setMarker(offer)">
-            <h2  >{{offer.name}}</h2>
-            <p>{{offer.description}}</p>
-        </li>
-    </ul>
-</div>
+    <div class ="container"> 
+        <ul class="list-group">
+            <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" ng-click="$ctrl.showDetailView(offer)"  >
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#"><img class="media-object" src={{offer.picture}}></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{offer.name}}</h4>
+                        <p>{{offer.description}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 <div class = 'cameraButton'>
     <div class="container" id= "capture">
         <div class = 'image-upload'>
@@ -18,13 +25,10 @@
             accept="image/*" capture=camera"  > 
         </div>
         <button id="btn-camera-upload" type="button" class="btn btn-inverse
-            btn-lg" ngf-select="$ctrl.uploadPicture($file)"
-            ng-model="$ctrl.file" ngf-pattern="'image/*'"
-            ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"  ngf-resize="{width: 420, height: 420, centerCrop:true}"  capture="camera">
+            btn-lg" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
         </button>   
     </div>
 </div>
-<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 

@@ -12,7 +12,7 @@
         $onInit(){
 
             this.$geolocation.getCurrentPosition({
-                timeout: 60000
+                timeout: 6000
             }).then(position => {
                 this.offer = new this.Offer();
                 this.offer.loc = [position.coords.longitude, position.coords.latitude];
@@ -21,6 +21,7 @@
         }
 
         submit(){
+            this.controlOffering(this.offer);
             if(this.file){
                 this.upload(this.file);
             }
@@ -41,7 +42,7 @@
                 //console.log('success: '+ resp);
                 this.offer.picture = resp.data;
                 this.offer.$save();
-                //this.$state.go("main");
+                this.$state.go("main");
 
             });
         }
@@ -51,6 +52,24 @@
             }
 
 
+        }
+
+        controlOffering(offer){
+            var message = " ";
+            try{
+                if (!offer.name.trim()){
+                    throw ("no name defined");
+                }
+                
+                if(isNaN(offer.price) ){
+                    throw "Price is not a number" ;
+                }
+            }
+            catch(e){
+                console.error(e);
+                throw new Error(e);
+                
+            }
         }
 
     }
