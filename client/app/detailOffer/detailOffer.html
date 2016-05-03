@@ -1,0 +1,39 @@
+<div class="container" ng-model="$ctrl.offer._id">
+    <div class="row clearfix">
+        <div class="col-xs-12 col-sm-4">
+            <img ng-src="{{$ctrl.offer.picture}}" alt="{{$ctrl.offer.name}}" title="{{$ctrl.offer.name}}" />
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <h2>{{$ctrl.offer.name}}</h2>
+            <p>{{$ctrl.offer.description}}</p>
+        </div>
+        <div class="col-xs-12 col-sm-4 pull-right">
+            <p class="offer-price">
+                {{$ctrl.offer.price}}
+            </p>
+        </div>
+        <div class="col-xs-12 col-sm-4 pull-right">
+            <input type="datetime" ng-value="{{$ctrl.offer.endDates}}" readonly />
+        </div>
+        <div class="col-xs-12 map" id="map-supply-detail" data-lat="{{$ctrl.offer.loc[0]}}" data-lng="{{$ctrl.offer.loc[1]}}"></div>
+    </div>
+    <div class="row comments" ng-repeat="comment in $ctrl.offer.comments">
+        <div class="col-xs-12">
+            <div class="row comment" data-creator="{{comment._creator}}">
+                <div class="col-xs-3">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </div>
+                <div class="col-xs-9">
+                    <p class="comment-date">{{comment.date}}</p>
+                    <p class="comment-text">{{comment.text}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <ul class="footer-list">
+        <li class="pull-left"><button type="reset" class="btn btn-default" ng-click="$ctrl.reset()"><span class="glyphicon glyphicon-arrow-left"></span></button></li>
+        <li class="pull-right"><button type="submit" class="btn btn-default" ng-click="$ctrl.createComment()"><span class="glyphicon glyphicon-comment"></span></button></li>
+    </ul>
+</div>
