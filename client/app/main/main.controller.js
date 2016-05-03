@@ -23,7 +23,7 @@
               this.awesomeThings = response.data;
               });*/
             this.$geolocation.getCurrentPosition({
-                timeout: 60000
+                timeout: 6000
                     
             }).then(position => {
                 this.options.zoom = 13;
