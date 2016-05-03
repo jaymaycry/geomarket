@@ -10,6 +10,13 @@ describe('Component: mainComponent', function() {
   var mainComponent;
   var state;
   var $httpBackend;
+  var offerMock = {
+  
+    query: function(obj){
+        var array = ['i', '2'];
+        return array;
+    }
+  }
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function(
@@ -17,22 +24,29 @@ describe('Component: mainComponent', function() {
     $http,
     $componentController,
     $rootScope,
-    $state) {
-      $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/things')
+    $state,
+    $q) {
+      //$httpBackend = _$httpBackend_;
+      //$httpBackend.expectGET('/api/offer').respond(['offer','offer2'])
+     /* $httpBackend.expectGET('/api/things')
         .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
-
+*/
       scope = $rootScope.$new();
       state = $state;
       mainComponent = $componentController('main', {
         $http: $http,
-        $scope: scope
+        $scope: scope,
+        Offer: offerMock
+
       });
   }));
 
+
   it('should attach a list of things to the controller', function() {
     mainComponent.$onInit();
-    $httpBackend.flush();
-    expect(mainComponent.awesomeThings.length).to.equal(4);
+    mainComponent.offers = offerMock;
+    console.log(mainComponent.offers);
+    //$httpBackend.flush();
+    expect(mainComponent.offers.length).to.equal(2);
   });
 });
