@@ -75,8 +75,8 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
      * @param  {Function} callback - optional, function(error, user)
      * @return {Promise}
      */
-    createAnonymousUser(callback) {
-      return User.createAnonymous({},
+    createAnonymousUser(captcha, callback) {
+      return User.createAnonymous(captcha,
         function(data) {
           $cookies.put('token', data.token);
           currentUser = User.get();
