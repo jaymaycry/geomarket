@@ -23,7 +23,7 @@
               this.awesomeThings = response.data;
               });*/
             this.$geolocation.getCurrentPosition({
-                timeout: 6000
+                timeout: 60000
                     
             }).then(position => {
                 this.options.zoom = 13;
@@ -31,7 +31,6 @@
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
-                console.log("position");
 
             });
 
