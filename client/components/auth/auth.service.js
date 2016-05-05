@@ -70,7 +70,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
     },
 
     /**
-     * Create a new user
+     * Create a new anonymous user
      *
      * @param  {Function} callback - optional, function(error, user)
      * @return {Promise}
