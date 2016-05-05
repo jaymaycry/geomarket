@@ -2,19 +2,14 @@
 (function(){
 
 class OfferComponent {
-  constructor(Offer, $geolocation) {
+  constructor(Offer) {
     this.Offer = Offer;
     this.offers = [];
     this.position;
-    this.$geolocation = $geolocation;
   }
   
   $onInit() {
-    this.$geolocation.getCurrentPosition({
-      timeout: 60000
-    }).then(position => {
-      this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
-    });
+    this.offers = this.Offer.my();
   }
 }
 
