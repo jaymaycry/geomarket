@@ -104,19 +104,22 @@ export function index(req, res) {
   coords[1] = req.query.latitude;
   
   return Offer.find({
-    // search for near offers
-    loc: {
-          $near: coords,
-          $maxDistance: maxDistance
+      // search for near offers
+      loc: {
+            $near: coords,
+            $maxDistance: maxDistance
+      },
+      // start date should be in the past
+      startDate: {
+        $lte: Date.now()
+      },
+      // end date should be in the future
+      endDate: {
+        $gte: Date.now()
+      },
+      status: 'open'
     },
-    // start date should be in the past
-    startDate: {
-      $lte: Date.now()
-    },
-    // end date should be in the future
-    endDate: {
-      $gte: Date.now()
-    }})
+    '-comments')
     //.limit(limit)
     .exec()
     .then(respondWithResult(res))
