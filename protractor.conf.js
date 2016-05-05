@@ -12,7 +12,7 @@ var config = {
   // with relative paths will be prepended with this.
   baseUrl: 'http://localhost:' + (process.env.PORT || '9000'),
 
-  // Credientials for Saucelabs
+  // Credentials for Saucelabs
   sauceUser: process.env.SAUCE_USERNAME,
 
   sauceKey: process.env.SAUCE_ACCESS_KEY,

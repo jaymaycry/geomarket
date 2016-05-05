@@ -11,6 +11,8 @@
 
 import _ from 'lodash';
 import Offer from './offer.model';
+import swagger from '../../swagger';
+import swaggerdoc from './offer.swagger';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -36,7 +38,7 @@ function removeEntity(res) {
     if (entity) {
       return entity.remove()
         .then(() => {
-          res.status(204).end();
+          res.status(204).send(swagger.apiMessage("Offer deleted."));
         });
     }
   };
@@ -45,7 +47,7 @@ function removeEntity(res) {
 function handleEntityNotFound(res) {
   return function(entity) {
     if (!entity) {
-      res.status(404).end();
+      res.status(404).send(swagger.apiError("Offer not found."));
       return null;
     }
     return entity;
@@ -55,50 +57,97 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
-    res.status(statusCode).send(err);
+    res.status(statusCode).send(swagger.apiError(err.toString()));
   };
 }
 
+function checkCreator(req, res) {
+  return function(entity) {
+    if (entity) {
+      if (!req.user._id.equals(entity._creator)) {
+        res.status(401).send(swagger.apiError("Only creator can edit this."));
+        return null
+      }
+      return entity;
+    }
+  }
+}
+
+function attachComment(req, res) {
+  return function(offer) {
+    req.body._creator = req.user._id;
+    offer.comments.push(req.body);
+    offer.save()
+      .then((updated) => {
+        return updated;
+      });
+  }
+}
+
+swagger.noteEndpoint('/api/offers', swaggerdoc.query, "Offer");
 // Gets a list of Offers
 export function index(req, res) {
-  // Maximum an Angeboten
-  var limit = req.query.limit || 10;
-  // Maximaler Umkreis
+  // max offers to search
+  // var limit = req.query.limit || 10;
+  // max radius for search
   var maxDistance = req.query.distance || 30;
-  // Umrechnung in Radianten
+  // calc to radians
   maxDistance /= 111.19444444;
-  // Standort
+  // geolocation
   var coords = [];
   coords[0] = req.query.longitude;
   coords[1] = req.query.latitude;
-  console.log(coords);
   
   return Offer.find({
+    // search for near offers
     loc: {
           $near: coords,
           $maxDistance: maxDistance
+    },
+    // start date should be in the past
+    startDate: {
+      $lte: Date.now()
+    },
+    // end date should be in the future
+    endDate: {
+      $gte: Date.now()
     }})
+    //.limit(limit)
     .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/my', swaggerdoc.my, "Offer");
+// Get all Offers of the request-user from the DB
+export function my(req, res) {
+  return Offer.find({ _creator: req.user._id })
+    .exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.get, "Offer");
 // Gets a single Offer from the DB
 export function show(req, res) {
-  return Offer.findById(req.params.id).exec()
+  return Offer.findById(req.params.id)
+    .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers', swaggerdoc.post, "Offer");
 // Creates a new Offer in the DB
 export function create(req, res) {
-  console.log(req.file);
+  // Attach user id to offer
+  req.body._creator = req.user._id;
   return Offer.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.patch, "Offer");
 // Updates an existing Offer in the DB
 export function update(req, res) {
   if (req.body._id) {
@@ -106,15 +155,29 @@ export function update(req, res) {
   }
   return Offer.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
+    .then(checkCreator(req, res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
+swagger.noteEndpoint('/api/offers/{id}', swaggerdoc.delete, "Offer");
 // Deletes a Offer from the DB
 export function destroy(req, res) {
   return Offer.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
+    .then(checkCreator(req, res))
     .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
+swagger.noteEndpoint('/api/offers/{id}/comment', swaggerdoc.addComment, "Offer");
+export function addComment(req, res) {
+  // Attach user id to comment
+  req.body._creator = req.user._id;
+  return Offer.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(attachComment(req, res))
+    .then(respondWithResult(res))
     .catch(handleError(res));
 }

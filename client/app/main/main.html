@@ -1,18 +1,37 @@
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
+<div class ="container" >
+    <div id ="map" ng-model="$ctrl.map" ></div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
-        <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.name}}</a></li>
-      </ul>
-    </div>
-  </div>
 </div>
+
+<div class ="container">
+    <ul class="list-group">
+        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" ng-click="$ctrl.showDetailView(offer)"  >
+            <div class="row">
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                        <img class="img-responsive"  ng-src="{{offer.picture}}" >
+                </div>
+            <div class="col-xs-8 col-sm-10 col-md-10">
+                <h2>{{offer.name}}</h2>
+                <p>{{offer.description}}</p>
+                <p>preis:{{offer.price}}</p>
+                <p>Erstellt am: {{offer.startDate}}</p>
+                <p>Endet am: {{offer.endDate}}</p>
+            </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class = 'cameraButton'>
+    <div class="container" id= "capture">
+        <div class = 'image-upload'>
+            <input type="file" name="input_camera" id="input_camera"
+            accept="image/*" capture=camera"  > 
+        </div>
+        <button id="btn-camera-upload" type="button" class="btn btn-inverse
+            btn-lg" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera">
+            <span class="glyphicon glyphicon-camera"></span>
+            Create an offer
+        </button>   
+    </div>
+</div>
+

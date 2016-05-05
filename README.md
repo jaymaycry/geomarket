@@ -9,7 +9,6 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Git](https://git-scm.com/)
 - [Node.js and npm](nodejs.org) Node ^4.2.3, npm ^2.14.7
 - [Bower](bower.io) (`npm install --global bower`)
-- [Ruby](https://www.ruby-lang.org) and then `gem install sass`
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
 - [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
 
@@ -19,7 +18,7 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 
 2. Run `bower install` to install front-end dependencies.
 
-3. Run `mongod` in a separate shell to keep an instance of the MongoDB Daemon running
+3. Run `mongod --dbpath ~/path/to/db` in a separate shell to keep an instance of the MongoDB Daemon running
 
 4. Run `gulp serve` to start the development server. It should automatically open the client in your browser when ready.
 
@@ -30,4 +29,18 @@ Run `grunt build` for building and `grunt serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+### Backend testing
+
+Running 'gulp test:server' will run all unittests for the backend.
+
+## Swagger Doc
+1. Open http://petstore.swagger.io/ in a browser
+
+2. Run the app with `gulp serve`
+
+2. Type in http://localhost:9000/swagger into the top field and hit 'Explore'.
+
+3. To set authentication hit 'Authorize' and paste in a valid token.
+
 =======

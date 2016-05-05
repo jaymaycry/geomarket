@@ -7,7 +7,18 @@ var offerCtrlStub = {
   show: 'offerCtrl.show',
   create: 'offerCtrl.create',
   update: 'offerCtrl.update',
-  destroy: 'offerCtrl.destroy'
+  destroy: 'offerCtrl.destroy',
+  addComment: 'offerCtrl.addComment',
+  my: 'offerCtrl.my'
+};
+
+var authServiceStub = {
+  isAuthenticated() {
+    return 'authService.isAuthenticated';
+  },
+  hasRole(role) {
+    return 'authService.hasRole.' + role;
+  }
 };
 
 var routerStub = {
@@ -25,7 +36,8 @@ var offerIndex = proxyquire('./index.js', {
       return routerStub;
     }
   },
-  './offer.controller': offerCtrlStub
+  './offer.controller': offerCtrlStub,
+  '../../auth/auth.service': authServiceStub
 });
 
 describe('Offer API Router:', function() {
@@ -53,22 +65,22 @@ describe('Offer API Router:', function() {
     });
 
   });
+  
+  describe('GET /api/offers/my', function() {
 
-  describe('POST /api/offers', function() {
-
-    it('should route to offer.controller.create', function() {
-      expect(routerStub.post
-        .withArgs('/', 'offerCtrl.create')
+    it('should route to offer.controller.my', function() {
+      expect(routerStub.get
+        .withArgs('/my', 'authService.isAuthenticated', 'offerCtrl.my')
         ).to.have.been.calledOnce;
     });
 
   });
 
-  describe('PUT /api/offers/:id', function() {
+  describe('POST /api/offers', function() {
 
-    it('should route to offer.controller.update', function() {
-      expect(routerStub.put
-        .withArgs('/:id', 'offerCtrl.update')
+    it('should be authenticated and route to offer.controller.create', function() {
+      expect(routerStub.post
+        .withArgs('/', 'authService.isAuthenticated', 'offerCtrl.create')
         ).to.have.been.calledOnce;
     });
 
@@ -76,9 +88,9 @@ describe('Offer API Router:', function() {
 
   describe('PATCH /api/offers/:id', function() {
 
-    it('should route to offer.controller.update', function() {
+    it('should be authenticated and route to offer.controller.update', function() {
       expect(routerStub.patch
-        .withArgs('/:id', 'offerCtrl.update')
+        .withArgs('/:id', 'authService.isAuthenticated', 'offerCtrl.update')
         ).to.have.been.calledOnce;
     });
 
@@ -86,9 +98,19 @@ describe('Offer API Router:', function() {
 
   describe('DELETE /api/offers/:id', function() {
 
-    it('should route to offer.controller.destroy', function() {
+    it('should be authenticated and route to offer.controller.destroy', function() {
       expect(routerStub.delete
-        .withArgs('/:id', 'offerCtrl.destroy')
+        .withArgs('/:id', 'authService.isAuthenticated', 'offerCtrl.destroy')
+        ).to.have.been.calledOnce;
+    });
+
+  });
+  
+  describe('PUT /api/offers/:id/addComment', function() {
+
+    it('should be authenticated and route to offer.controller.addComment', function() {
+      expect(routerStub.put
+        .withArgs('/:id/comment', 'authService.isAuthenticated', 'offerCtrl.addComment')
         ).to.have.been.calledOnce;
     });
 
