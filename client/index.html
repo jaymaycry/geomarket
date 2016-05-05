@@ -7,9 +7,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <base href="/">
-    <title></title>
+    <title>geoMarket</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--IOS and Androi web clips-->
+    <link rel="apple-touch-icon" href="icons/apple-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="58x58" href="icons/apple-icon-58x58.png" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
@@ -48,19 +55,19 @@
     <![endif]-->
     <!-- build:js({client,node_modules}) app/vendor.js -->
       <!-- bower:js -->
-      <script src="bower_components/jquery/dist/jquery.js"></script>
-      <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/angular-resource/angular-resource.js"></script>
-      <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-      <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-      <script src="bower_components/lodash/lodash.js"></script>
-      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
-      <script src="bower_components/ngGeolocation/ngGeolocation.js"></script>
-      <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
-      <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
-      <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+      <script src='bower_components/jquery/dist/jquery.js'></script>
+      <script src='bower_components/angular/angular.js'></script>
+      <script src='bower_components/angular-resource/angular-resource.js'></script>
+      <script src='bower_components/angular-cookies/angular-cookies.js'></script>
+      <script src='bower_components/angular-sanitize/angular-sanitize.js'></script>
+      <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+      <script src='bower_components/lodash/lodash.js'></script>
+      <script src='bower_components/angular-ui-router/release/angular-ui-router.js'></script>
+      <script src='bower_components/angular-validation-match/dist/angular-validation-match.min.js'></script>
+      <script src='bower_components/ngGeolocation/ngGeolocation.js'></script>
+      <script src='bower_components/ng-file-upload/ng-file-upload.js'></script>
+      <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
+      <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js(.tmp) app/app.js -->
@@ -78,8 +85,6 @@
       <script src="app/app.constant.js"></script>
       <script src="app/createOffering/createOffering.controller.js"></script>
       <script src="app/createOffering/createOffering.js"></script>
-      <script src="app/detailOffer/detailOffer.controller.js"></script>
-      <script src="app/detailOffer/detailOffer.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
       <script src="app/offer/create/create.controller.js"></script>
@@ -97,9 +102,9 @@
       <script src="components/navbar/navbar.controller.js"></script>
       <script src="components/navbar/navbar.directive.js"></script>
       <script src="components/util/util.service.js"></script>
-      <script src="packages/Microsoft.ApplicationInsights.JavaScript.0.15.0-build58334/content/scripts/ai.0.15.0-build58334.js"></script>
-      <script src="packages/Microsoft.ApplicationInsights.JavaScript.0.15.0-build58334/content/scripts/ai.0.15.0-build58334.min.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
+    <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyCZHLa-O44Z6vlGd0STzXp_harNZji1McM'></script>
+
   </body>
 </html>

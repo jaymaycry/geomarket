@@ -86,6 +86,7 @@ module.exports = {
             }
           }  
         },
+        "400": swagger.errorResponse("Need to provide longitude and latitude."),
         "500": swagger.errorResponse("Error.")
       }
     }
@@ -161,6 +162,7 @@ my: {
             }
           }  
         },
+        "401": swagger.errorResponse("Unauthorized."),
         "500": swagger.errorResponse("Error.")
       }
     }
@@ -379,7 +381,6 @@ my: {
           }  
         },
         "401": swagger.errorResponse("Not authenticated."),
-        "404": swagger.errorResponse("Offer not found."),
         "500": swagger.errorResponse("Error.")
       }
     }
@@ -524,6 +525,7 @@ my: {
           }  
         },
         "401": swagger.errorResponse("Not authenticated."),
+        "403": swagger.errorResponse("Only creator can edit this."),
         "404": swagger.errorResponse("Offer not found."),
         "500": swagger.errorResponse("Error.")
       }
@@ -545,6 +547,7 @@ my: {
       responses: {
         "204": swagger.messageResponse("Offer deleted."),
         "401": swagger.errorResponse("Not authenticated."),
+        "403": swagger.errorResponse("Only creator can edit this."),
         "404": swagger.errorResponse("Offer not found."),
         "500": swagger.errorResponse("Error.")
       }
@@ -644,6 +647,7 @@ my: {
             }
           }  
         },
+        "400": swagger.errorResponse("need to provide a text."),
         "401": swagger.errorResponse("Not authenticated."),
         "404": swagger.errorResponse("Offer not found."),
         "500": swagger.errorResponse("Error")

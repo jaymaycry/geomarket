@@ -57,6 +57,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
+    console.log(err);
     res.status(statusCode).send(swagger.apiError(err.toString()));
   };
 }
@@ -65,8 +66,8 @@ function checkCreator(req, res) {
   return function(entity) {
     if (entity) {
       if (!req.user._id.equals(entity._creator)) {
-        res.status(401).send(swagger.apiError("Only creator can edit this."));
-        return null
+        res.status(403).send(swagger.apiError("Only creator can edit this."));
+        return null;
       }
       return entity;
     }
@@ -75,18 +76,22 @@ function checkCreator(req, res) {
 
 function attachComment(req, res) {
   return function(offer) {
-    req.body._creator = req.user._id;
-    offer.comments.push(req.body);
-    offer.save()
-      .then((updated) => {
-        return updated;
-      });
+    if (offer) {
+      if (!req.body.text) { 
+        res.status(400).send(swagger.apiError("Need to provide a text.")); 
+        return null; 
+      }
+      req.body._creator = req.user._id;
+      offer.comments.push(req.body);
+      return offer.save();
+    }
   }
 }
 
 swagger.noteEndpoint('/api/offers', swaggerdoc.query, "Offer");
 // Gets a list of Offers
 export function index(req, res) {
+  if (!req.query.longitude || !req.query.latitude) { return res.status(400).send(swagger.apiError("Need to provide longitude and latitude.")); }
   // max offers to search
   // var limit = req.query.limit || 10;
   // max radius for search
@@ -175,7 +180,8 @@ swagger.noteEndpoint('/api/offers/{id}/comment', swaggerdoc.addComment, "Offer")
 export function addComment(req, res) {
   // Attach user id to comment
   req.body._creator = req.user._id;
-  return Offer.findById(req.params.id).exec()
+  return Offer.findById(req.params.id)
+    .exec()
     .then(handleEntityNotFound(res))
     .then(attachComment(req, res))
     .then(respondWithResult(res))

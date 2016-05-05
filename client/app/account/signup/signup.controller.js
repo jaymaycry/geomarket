@@ -37,6 +37,18 @@ class SignupController {
       });
     }
   }
+  
+  registerAnonymous() {
+    this.submitted = true;
+    
+    this.Auth.createAnonymousUser()
+    .then(() => {
+      this.$state.go('main');
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
 }
 
 angular.module('geomarketApp')

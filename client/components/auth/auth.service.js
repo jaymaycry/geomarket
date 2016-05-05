@@ -70,6 +70,25 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
     },
 
     /**
+     * Create a new user
+     *
+     * @param  {Function} callback - optional, function(error, user)
+     * @return {Promise}
+     */
+    createAnonymousUser(callback) {
+      return User.createAnonymous({},
+        function(data) {
+          $cookies.put('token', data.token);
+          currentUser = User.get();
+          return safeCb(callback)(null);
+        },
+        function(err) {
+          Auth.logout();
+          return safeCb(callback)(err);
+        }).$promise;
+    },
+    
+    /**
      * Change password
      *
      * @param  {String}   oldPassword

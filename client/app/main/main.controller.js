@@ -31,12 +31,7 @@
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
-                console.log("position");
 
-            }).then(marker => {
-                console.log("marker");
-                console.log(this.offers.length);
-            
             });
 
         }
@@ -59,19 +54,11 @@
 				
 
             //marker.setMap(this.userMap);
-        };
-        //angular.element('#input_camera').trigger('click');
+        }
 
-        /*  addThing() {
-            if (this.newThing) {
-            this.$http.post('/api/things', { name: this.newThing });
-            this.newThing = '';
-            }
-            }*/
-
-        /*  deleteThing(thing) {
-            this.$http.delete('/api/things/' + thing._id);
-            }*/
+        showDetailView(offer){
+            console.log(offer);  
+        }
     }
 
     angular.module('geomarketApp')
