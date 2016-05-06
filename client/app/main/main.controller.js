@@ -56,8 +56,14 @@
             //marker.setMap(this.userMap);
         }
 
-        showDetailView(offer){
-            console.log(offer);  
+        showDetailView(offer) {
+            this.$state.go("detailOffer", {
+                obj:
+                    {
+                        id: offer._id,
+                        offerObj: this.Offer
+                    }
+            });
         }
     }
 
