@@ -4,7 +4,7 @@
 
     class MainController {
         
-        constructor($http,Upload,$geolocation,Offer,$state) {
+        constructor($http,Upload,$geolocation,Offer,$state,Auth) {
             this.$http = $http;
             this.Upload = Upload;
             this.position;
@@ -15,6 +15,7 @@
             this.options={};
             this.userMap;
             this.marker;
+            this.isLoggedIn = Auth.isLoggedIn;
         }
 
         $onInit() {
@@ -33,10 +34,9 @@
         }
 
         uploadPicture(file){
-            if(file){
+            if(file && this.isLoggedIn()){
                 this.$state.go("createOffering",{obj: file});
             }
-        
         
         }
         
