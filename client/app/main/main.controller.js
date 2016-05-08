@@ -15,13 +15,9 @@
             this.options={};
             this.userMap;
             this.marker;
-            //this.awesomeThings = [];
         }
 
         $onInit() {
-            /*this.$http.get('/api/things').then(response => {
-              this.awesomeThings = response.data;
-              });*/
             this.$geolocation.getCurrentPosition({
                 timeout: 6000
                     
@@ -55,10 +51,7 @@
 
             //marker.setMap(this.userMap);
         }
-
-        showDetailView(offer){
-            console.log(offer);  
-        }
+        
     }
 
     angular.module('geomarketApp')

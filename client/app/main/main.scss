@@ -25,20 +25,20 @@
 .navbar-text {
   margin-left: 15px;
 }
-.image-upload > input
-{
-    display: none;
-}
+
+
 .cameraButton {
   position: fixed;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 70px;
 }
 #btn-camera-upload {
     display:block;
     width:100%;
+    height:70px;
+    background: #d3d3d3 ;
+    border-radius: 0px;
 }
 #map{
     overflow:hidden;
@@ -46,6 +46,24 @@
     position:relative;
     height:0;
 }
+
+li a{
+    color: #000;
+    text-decoration: none;
+}
+
+li a:hover{
+    color: #000;
+    text-decoration: none;
+
+}
+/*.offer-link a:link{
+    text-decoration: none;
+}
+.offer-link a:hover{
+    text-decoration:none;
+}*/
+
 /*.offerPicture{
     max-width:100%;
 }*/

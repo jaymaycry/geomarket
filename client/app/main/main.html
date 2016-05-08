@@ -1,34 +1,28 @@
 <div class ="container" >
-    <div id ="map" ng-model="$ctrl.map" ></div>
-
-</div>
-
-<div class ="container">
+<div id ="map" ng-model="$ctrl.map" ></div>
     <ul class="list-group">
-        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" ng-click="$ctrl.showDetailView(offer)"  >
+        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" >
+            <a ng-href="/detailOffer/{{offer._id}}" ui-sref="detailOffer" class = 'offer-link'>
             <div class="row">
                 <div class="col-xs-4 col-sm-2 col-md-2">
                         <img class="img-responsive"  ng-src="{{offer.picture}}" >
                 </div>
             <div class="col-xs-8 col-sm-10 col-md-10">
-                <h2>{{offer.name}}</h2>
+                <h4>{{offer.name}}</h4>
                 <p>{{offer.description}}</p>
                 <p>preis:{{offer.price}}</p>
                 <p>Erstellt am: {{offer.startDate}}</p>
                 <p>Endet am: {{offer.endDate}}</p>
             </div>
             </div>
+            </a>
         </li>
     </ul>
+    
 </div>
 <div class = 'cameraButton'>
-    <div class="container" id= "capture">
-        <div class = 'image-upload'>
-            <input type="file" name="input_camera" id="input_camera"
-            accept="image/*" capture=camera"  > 
-        </div>
-        <button id="btn-camera-upload" type="button" class="btn btn-inverse
-            btn-lg" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera">
+    <div class="" id= "capture"  >
+        <button id="btn-camera-upload" type="button" class="btn btn-lg btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
         </button>   
