@@ -24,7 +24,7 @@ export function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
-      validateJwt(req, res, next);
+      return validateJwt(req, res, next);
     })
     // Attach user to request
     .use(function(req, res, next) {
@@ -34,7 +34,7 @@ export function isAuthenticated() {
             return res.status(401).send(swagger.apiError("Not authenticated."));
           }
           req.user = user;
-          next();
+          return next();
         })
         .catch(err => next(err));
     });
