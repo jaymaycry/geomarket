@@ -26,8 +26,6 @@ function getFile(req, res) {
   var storedMimeType = mime.lookup(filePath);
   res.setHeader('Content-Type', storedMimeType);
 
-  console.log(JSON.stringify(config.mongo));
-
   var gfs = new Grid(mongoose.connection);
 
   var readStream = gfs.createReadStream(filePath);
