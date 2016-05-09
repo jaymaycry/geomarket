@@ -23,8 +23,8 @@ swagger.noteEndpoint('/uploads/{filename}', swaggerdoc.get, "Uploads");
 function getFile(req, res) {
   var filePath = req.params.id;
 
-  // todo: fix mime type
-  //var storedMimeType = mime.lookup(filePath);
+  var storedMimeType = mime.lookup(filePath);
+  res.setHeader('Content-Type', storedMimeType);
 
   console.log(JSON.stringify(config.mongo));
 
