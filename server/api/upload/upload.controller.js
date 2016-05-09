@@ -4,9 +4,8 @@ import config from '../../config/environment';
 import swaggerdoc from './upload.swagger';
 import swagger from '../../swagger';
 import mongoose from 'mongoose';
-var Grid = require('gridfs-stream');
-Grid.mongo = mongoose.mongo;
 
+var Grid = require('gridfs-stream');
 var mime = require('mime');
 var path = require('path');
 
@@ -26,7 +25,7 @@ function getFile(req, res) {
   var storedMimeType = mime.lookup(filePath);
   res.setHeader('Content-Type', storedMimeType);
 
-  var gfs = new Grid(mongoose.connection);
+  var gfs = new Grid(mongoose.connection, mongoose.mongo);
 
   var readStream = gfs.createReadStream(filePath);
 
