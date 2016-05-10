@@ -57,13 +57,7 @@
         }
 
         showDetailView(offer) {
-            this.$state.go("detailOffer", {
-                obj:
-                    {
-                        id: offer._id,
-                        offerObj: this.Offer
-                    }
-            });
+            this.$state.go("detailOffer?" + offer._id);
         }
     }
 

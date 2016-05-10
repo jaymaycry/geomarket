@@ -2,12 +2,15 @@
 (function(){
 
 class CreateCommentComponent {
-    constructor($state, $http) {
+    constructor($state, $http, Auth) {
         this.$state = $state;
         this.$http = $http;
         this.Offer;
         this.offerId;
         this.comment;
+        this.Auth = Auth;
+        this.isLoggedIn = Auth.isLoggedIn;
+        this.getCurrentUser = Auth.getCurrentUser;
         this.user;
     }
 
@@ -15,9 +18,7 @@ class CreateCommentComponent {
         var _this = this;
         this.Offer = this.$state.params.obj.offerObj;
         this.offerId = this.$state.params.obj.id;
-        this.$http.get('/api/users/me').then(response => {
-            _this.user = response.data;
-        });
+        this.user = this.getCurrentUser();
     }
 
     submit() {

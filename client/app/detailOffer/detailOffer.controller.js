@@ -1,88 +1,60 @@
 'use strict';
-(function(){
+(function () {
 
-class DetailOfferComponent {
-    constructor($state, $http) {
-        this.offer;
-        this.options = {};
-        this.$state = $state;
-        this.userMap;
-        this.$http = $http;
-        this.Offer;
-        this.user;
-        this.owner;
-  }
-    $onInit() {
-        this.owner = false;
-        this.Offer = this.$state.params.obj.offerObj;
-        var _this = this;
-        
-        this.$http.get('/api/offers/' + this.$state.params.obj.id).then(response => {
-            _this.offer = response.data;
+    class DetailOfferComponent {
+        constructor($state, $http, Offer, $stateParams, Auth) {
+            this.offer;
+            this.options = {};
+            this.$state = $state;
+            this.userMap;
+            this.$http = $http;
+            this.Offer = Offer;
+            this.user;
+            this.Auth = Auth;
+            this.isLoggedIn = Auth.isLoggedIn;
+            this.getCurrentUser = Auth.getCurrentUser;
+            this.owner;
+            this.$stateParams = $stateParams;
+        }
+        $onInit() {
+            this.owner = false;
+            //this.Offer = this.$state.params.obj.offerObj;
+            var _this = this;
 
-            _this.options.zoom = 13;
-            _this.options.mapTypeId = google.maps.MapTypeId.ROADMAP;
-            _this.userMap = new google.maps.Map(map, _this.options);
-            _this.setMarker(_this.offer);
-            _this.offer.endDate = new Date(_this.offer.endDate);
-            _this.getUser(_this.isOwner,_this);
-            
-        });
-        
-        
-    }
-
-
-    setMarker(offer) {
-        var marker = new google.maps.Marker({
-            map: this.userMap,
-            animation: google.maps.Animation.DROP,
-            position: new google.maps.LatLng(offer.loc[1], offer.loc[0]),
-            visible: true
-        });
-        var bounds = new google.maps.LatLngBounds(marker.position);
-        this.userMap.fitBounds(bounds);
-        
-    }
-    goBack() {
-        this.$state.go("main");
-    }
-
-    getUser(callback, thisElement) {
-        var _this = this;
-        if (typeof this.user == 'undefined') {
-            this.$http.get('/api/users/me').then(response => {
-                _this.user = response.data;
-
-                if (typeof callback === "function") {
-                    if (response.data != null) {
-                        callback(true, thisElement);
-                    }
-                    else {
-                        callback(false, thisElement);
-                    }
-                }
+            _this.offer = this.Offer.get({ id: this.$stateParams.id }, function (e) {
+                _this.options.zoom = 13;
+                _this.options.mapTypeId = google.maps.MapTypeId.ROADMAP;
+                _this.userMap = new google.maps.Map(map, _this.options);
+                _this.setMarker(_this.offer);
+                _this.offer.endDate = new Date(_this.offer.endDate);
+                _this.isOwner();
             });
-        }
-        else {
-            if (typeof callback === "function") {
-                callback(true, thisElement);
-            }
-        }
-        
-    }
 
-    isOwner(hasUser,thisElement) {
-        var _this = this;
-        if (typeof hasUser == 'undefined' && typeof _this.user == 'undefined') {
-            _this.getUser(_this.isOwner, _this);
         }
-        else {
-            var _this = thisElement;
-            if (!hasUser) {
+
+
+        setMarker(offer) {
+            var marker = new google.maps.Marker({
+                map: this.userMap,
+                animation: google.maps.Animation.DROP,
+                position: new google.maps.LatLng(offer.loc[1], offer.loc[0]),
+                visible: true
+            });
+            var bounds = new google.maps.LatLngBounds(marker.position);
+            this.userMap.fitBounds(bounds);
+        }
+        goBack() {
+            this.$state.go("main");
+        }
+
+
+        isOwner() {
+            var _this = this;
+            _this.user = _this.getCurrentUser();
+            if (_this.user == 'undefined') {
                 return false;
             }
-            else if (!typeof hasUser == 'undefined' && _this.owner) {
+            else if (_this.owner) {
                 return true;
             }
             else {
@@ -95,17 +67,13 @@ class DetailOfferComponent {
                     return false;
                 }
             }
-        }
-    }
 
-    createComment(hasUser, thisElement) {
-        var _this = this;
-        if (typeof hasUser == 'undefined') {
-            _this.getUser(_this.createComment, _this);
         }
-        else {
-            var _this = thisElement;
-            if (!hasUser) {
+
+        createComment() {
+            var _this = this;
+            _this.user = _this.getCurrentUser();
+            if (_this.user == 'undefined') {
                 _this.$state.go("login");
             }
             else {
@@ -116,55 +84,55 @@ class DetailOfferComponent {
                     }
                 });
             }
-        }   
+
+        }
+
+        deleteOffer() {
+            if (this.owner) {
+                this.$state.go("deleteOffer", {
+                    obj: {
+                        id: this.offer._id,
+                        offerObj: this.Offer
+                    }
+                });
+            }
+            else {
+                alert("Delete offer failed: You are not the owner of this offer!")
+            }
+        }
+
+        editOffer() {
+            if (this.owner) {
+                this.$state.go("editOffer", {
+                    obj: {
+                        id: this.offer._id,
+                        offerObj: this.Offer
+                    }
+                });
+            }
+            else {
+                alert("Edit offer failed: You are not the owner of this offer!")
+            }
+        }
+
+        sellOffer() {
+            if (this.owner) {
+                this.$state.go("sellOffer", {
+                    obj: {
+                        id: this.offer._id,
+                        offerObj: this.Offer
+                    }
+                });
+            }
+            else {
+                alert("Sell offer failed: You are not the owner of this offer!")
+            }
+        }
     }
 
-    deleteOffer() {
-        if (this.owner) {
-            _this.$state.go("deleteOffer", {
-                obj: {
-                    id: _this.offer._id,
-                    offerObj: _this.Offer
-                }
-            });
-        }
-        else {
-            alert("Delete offer failed: You are not the owner of this offer!")
-        }
-    }
-
-    editOffer() {
-        if (this.owner) {
-            _this.$state.go("editOffer", {
-                obj: {
-                    id: _this.offer._id,
-                    offerObj: _this.Offer
-                }
-            });
-        }
-        else {
-            alert("Edit offer failed: You are not the owner of this offer!")
-        }
-    }
-
-    sellOffer() {
-        if (this.owner) {
-            _this.$state.go("sellOffer", {
-                obj: {
-                    id: _this.offer._id,
-                    offerObj: _this.Offer
-                }
-            });
-        }
-        else {
-            alert("Sell offer failed: You are not the owner of this offer!")
-        }
-    }
-}
-
-angular.module('geomarketApp').component('detailOffer', {
-    templateUrl: 'app/detailOffer/detailOffer.html',
-    controller: DetailOfferComponent
-});
+    angular.module('geomarketApp').component('detailOffer', {
+        templateUrl: 'app/detailOffer/detailOffer.html',
+        controller: DetailOfferComponent
+    });
 
 })();

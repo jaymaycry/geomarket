@@ -5,6 +5,9 @@ angular.module('geomarketApp')
     $stateProvider
       .state('editOffer', {
         url: '/editOffer',
-        template: '<edit-offer></edit-offer>'
+        template: '<edit-offer></edit-offer>',
+        params: {
+            obj: null
+        }
       });
   });

@@ -5,7 +5,7 @@
 
 <div class ="container">
     <ul class="list-group">
-        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" ng-click="$ctrl.showDetailView(offer)"  >
+        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" ui-sref="detailOffer({id: offer._id})"  >
             <div class="row">
                 <div class="col-xs-4 col-sm-2 col-md-2">
                         <img class="img-responsive"  ng-src="{{offer.picture}}" >
