@@ -72,10 +72,8 @@ describe('Upload API:', function() {
         .set('authorization', 'Bearer ' + token)
         .end((err, res) => {
           if (err) {
-            console.log(err);
             return done(err);
           }
-          console.log(res.body);
           expect(res.status).to.equal(200);
           picturePath = res.body;
           done();

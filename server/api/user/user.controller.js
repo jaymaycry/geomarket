@@ -70,7 +70,7 @@ export function createAnonymous(req, res, next) {
     return s;
   }
 
-  var username = 'user' + randString(5);
+  var username = 'Anonymous' + randString(5);
   var password = randString(8);
 
   var newUser = new User({
