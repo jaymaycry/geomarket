@@ -22,7 +22,10 @@ var OfferSchema = new mongoose.Schema({
   comments: [
     {
       _creator:  { type: mongoose.Schema.ObjectId, ref: 'User' },
-      date: Date,
+      date: { 
+        type:Date,
+        default: Date.now
+      },
       text: String
     }
   ],

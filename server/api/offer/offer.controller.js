@@ -82,6 +82,7 @@ function attachComment(req, res) {
         return null; 
       }
       req.body._creator = req.user._id;
+      delete req.body.date;
       offer.comments.push(req.body);
       return offer.save();
     }
