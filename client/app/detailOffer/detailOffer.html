@@ -1,42 +1,28 @@
-<div class="container" ng-model="$ctrl.offer">
-    <div class="row clearfix">
+<div class="container">
+    <div class="row">
+            
         <div class="col-xs-12 col-sm-4">
-            <img ng-src="{{$ctrl.offer.picture}}" alt="{{$ctrl.offer.name}}" title="{{$ctrl.offer.name}}" class="img-responsive"/>
+            <img ng-src="{{$ctrl.offer.picture}}" alt="{{$ctrl.offer.name}}" title="{{$ctrl.offer.name}}" class="img-responsive img-thumbnail"/>
+            <button ng-click="$ctrl.sellOffer()" type="button" class="btn btn-default btn-lg btn-block btn-success"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
+            <button ng-click="$ctrl.editOffer()" type="button" class="btn btn-default btn-lg btn-block btn-warning"><span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span> Edit offer</button>
+            <button ng-click="$ctrl.deleteOffer()" type="button" class="btn btn-default btn-lg btn-block btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
         </div>
         <div class="col-xs-12 col-sm-8">
+                
             <h2>{{$ctrl.offer.name}}</h2>
             <p>{{$ctrl.offer.description}}</p>
-        </div>
-        <div class="col-xs-12">
-            <label for="offeringPrice" class="pull-left">Price</label>
-            <input type="number" class="form-control" id="offeringPrice" step="0.05" placeholder="0.00" ng-model="$ctrl.offer.price" readonly>
-        </div>
-        <div class="col-xs-12">
-            <label for="offeringEndDate" class="pull-left">End date</label>
-            <input type="date" class="form-control" ng-model="$ctrl.offer.endDate" readonly />
-        </div>
-        <div class="col-xs-12 map" id ="map" ng-model="$ctrl.map"></div>
-    </div>
-    <div class="row comments" ng-repeat="comment in $ctrl.offer.comments">
-        <div class="col-xs-12">
-            <div class="row comment" data-creator="{{comment._creator}}">
-                <div class="col-xs-3">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                </div>
-                <div class="col-xs-9">
-                    <p class="comment-date">{{comment.date}}</p>
-                    <p class="comment-text">{{comment.text}}</p>
-                </div>
+            <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="$ctrl.offer.endDate"></span></p>
+            
+            <div class="col-xs-12 map" id ="map" ng-model="$ctrl.map"></div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Comments:</div>
+                <table class="table">
+                    <tr ng-repeat="comment in $ctrl.offer.comments">
+                        <td><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="comment.date"></span></td>
+                        <td>{{comment.text}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-</div>
-<div class="container">
-    <ul class="footer-list">
-        <li class="pull-left"><button type="reset" class="btn btn-default" ng-click="$ctrl.goBack()"><span class="glyphicon glyphicon-arrow-left"></span></button></li>
-        <li ng-show="$ctrl.owner" class="pull-right"><button type="button" class="btn btn-default" ng-click="$ctrl.editOffer()"><span class="glyphicon glyphicon-edit"></span></button></li>
-        <li ng-show="$ctrl.owner" class="pull-right"><button type="button" class="btn btn-default" ng-click="$ctrl.deleteOffer()"><span class="glyphicon glyphicon-trash"></span></button></li>
-        <li ng-show="$ctrl.owner" class="pull-right"><button type="button" class="btn btn-default" ng-click="$ctrl.sellOffer()"><span class="glyphicon glyphicon-usd"></span></button></li>
-        <li class="pull-right"><button type="submit" class="btn btn-default" ng-click="$ctrl.createComment()"><span class="glyphicon glyphicon-comment"></span></button></li>
-    </ul>
 </div>
