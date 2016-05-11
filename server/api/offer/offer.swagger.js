@@ -50,25 +50,11 @@ module.exports = {
                 "active": {
                   "type": "boolean"
                 },
+                "status:": {
+                  "type": "string"
+                },
                 "__v": {
                   "type": "number"
-                },
-                "comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_creator": {
-                        "type": "string"
-                      },
-                      "date": {
-                        "type": "string"
-                      },
-                      "text": {
-                        "type": "string"
-                      }
-                    }
-                  }
                 },
                 "viewCounter": {
                   "type": "number"
@@ -125,6 +111,9 @@ my: {
                 },
                 "active": {
                   "type": "boolean"
+                },
+                "status:": {
+                  "type": "string"
                 },
                 "__v": {
                   "type": "number"
@@ -207,6 +196,9 @@ my: {
               "active": {
                 "type": "boolean"
               },
+              "status:": {
+                "type": "string"
+              },
               "__v": {
                 "type": "number"
               },
@@ -282,6 +274,9 @@ my: {
               "active": {
                 "type": "boolean"
               },
+              "status:": {
+                "type": "string"
+              },
               "__v": {
                 "type": "number"
               },
@@ -344,6 +339,9 @@ my: {
               },
               "active": {
                 "type": "boolean"
+              },
+              "status:": {
+                "type": "string"
               },
               "__v": {
                 "type": "number"
@@ -425,6 +423,9 @@ my: {
               },
               "active": {
                 "type": "boolean"
+              },              
+              "status:": {
+                "type": "string"
               },
               "__v": {
                 "type": "number"
@@ -488,6 +489,9 @@ my: {
               },
               "active": {
                 "type": "boolean"
+              },
+              "status:": {
+                "type": "string"
               },
               "__v": {
                 "type": "number"
@@ -611,6 +615,9 @@ my: {
               },
               "active": {
                 "type": "boolean"
+              },
+              "status:": {
+                "type": "string"
               },
               "__v": {
                 "type": "number"

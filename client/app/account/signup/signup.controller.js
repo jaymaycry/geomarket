@@ -5,6 +5,9 @@ class SignupController {
   user = {};
   errors = {};
   submitted = false;
+  submittedAnonymous = false;
+  captchaResponse = null;
+  
   //end-non-standard
 
   constructor(Auth, $state) {
@@ -19,7 +22,8 @@ class SignupController {
       this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
-        password: this.user.password
+        password: this.user.password,
+        'g-recaptcha-response': this.captchaResponse
       })
       .then(() => {
         // Account created, redirect to home
@@ -38,16 +42,18 @@ class SignupController {
     }
   }
   
-  registerAnonymous() {
-    this.submitted = true;
+  registerAnonymous(form) {
+    this.submittedAnonymous = true;
     
-    this.Auth.createAnonymousUser()
-    .then(() => {
-      this.$state.go('main');
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    if (form.$valid) {
+      this.Auth.createAnonymousUser({'g-recaptcha-response': this.captchaResponse})
+      .then(() => {
+        this.$state.go('main');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   }
 }
 
