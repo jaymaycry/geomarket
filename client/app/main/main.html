@@ -1,36 +1,40 @@
 <div class ="container" >
     <div id ="map" ng-model="$ctrl.map" ></div>
-
-</div>
-
-<div class ="container">
     <ul class="list-group">
-        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" ui-sref="detailOffer({id: offer._id})"  >
-            <div class="row">
-                <div class="col-xs-4 col-sm-2 col-md-2">
+        <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" >
+            <a ng-href="/detailOffer/{{offer._id}}" ui-sref="detailOffer({id: offer._id})" class = 'offer-link'>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
                         <img class="img-responsive"  ng-src="{{offer.picture}}" >
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <h4>{{offer.name}}</h4>
+                        <p>preis:{{offer.price}}</p>
+                        <p class="hidden-xs hidden-sm">{{offer.description}}</p>
+                        <p>Erstellt am: {{offer.startDate.substring(0,10)}} Endet am: {{offer.endDate.substring(0,10)}}</p>
+                    </div>
                 </div>
-            <div class="col-xs-8 col-sm-10 col-md-10">
-                <h2>{{offer.name}}</h2>
-                <p>{{offer.description}}</p>
-                <p>preis:{{offer.price}}</p>
-                <p>Erstellt am: {{offer.startDate}}</p>
-                <p>Endet am: {{offer.endDate}}</p>
-            </div>
-            </div>
+            </a>
         </li>
     </ul>
+
 </div>
 <div class = 'cameraButton'>
-    <div class="container" id= "capture">
-        <div class = 'image-upload'>
-            <input type="file" name="input_camera" id="input_camera"
-            accept="image/*" capture=camera"  > 
-        </div>
-        <button id="btn-camera-upload" type="button" class="btn btn-inverse
-            btn-lg" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera">
+    <div class="" id= "capture"  >
+        <button id="btn-camera-upload" type="button" class="btn btn-lg
+        btn-block" ngf-select="$ctrl.uploadPicture($file)"
+                   ng-model="$ctrl.file" ngf-pattern="'image/*'"
+                                         ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera"
+                                                                                    ng-show="$ctrl.isLoggedIn()">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
+        </button>
+        <button id="btn-login" class="btn btn-lg btn-block" type="button"
+                                                            ng-hide="$ctrl.isLoggedIn()"
+                                                            ui-serv-active="active"
+                                                            ui-sref="signup">
+            <span class="glyphicon glyphicon-log-in"></span>
+            log in before creating an offer
         </button>   
     </div>
 </div>

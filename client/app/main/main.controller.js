@@ -4,7 +4,7 @@
 
     class MainController {
         
-        constructor($http,Upload,$geolocation,Offer,$state) {
+        constructor($http,Upload,$geolocation,Offer,$state,Auth) {
             this.$http = $http;
             this.Upload = Upload;
             this.position;
@@ -15,15 +15,12 @@
             this.options={};
             this.userMap;
             this.marker;
-            //this.awesomeThings = [];
+            this.isLoggedIn = Auth.isLoggedIn;
         }
 
         $onInit() {
-            /*this.$http.get('/api/things').then(response => {
-              this.awesomeThings = response.data;
-              });*/
             this.$geolocation.getCurrentPosition({
-                timeout: 60000
+                timeout: 6000
                     
             }).then(position => {
                 this.options.zoom = 13;
@@ -37,10 +34,9 @@
         }
 
         uploadPicture(file){
-            if(file){
+            if(file && this.isLoggedIn()){
                 this.$state.go("createOffering",{obj: file});
             }
-        
         
         }
         
@@ -59,6 +55,7 @@
         showDetailView(offer) {
             this.$state.go("detailOffer?" + offer._id);
         }
+        
     }
 
     angular.module('geomarketApp')
