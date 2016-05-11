@@ -319,6 +319,15 @@ gulp.task('start:server', () => {
         .on('log', onServerLog);
 });
 
+gulp.task('debug:server', () => {
+//  debug = true;
+  process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+  config = require(`./${serverPath}/config/environment`);
+  nodemon(`-w ${serverPath} ${serverPath}`)
+    .on('log', onServerLog);
+});
+
+
 gulp.task('watch', () => {
     var testFiles = _.union(paths.client.test, paths.server.test.unit, paths.server.test.integration);
 

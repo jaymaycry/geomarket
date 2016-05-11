@@ -21,6 +21,9 @@ var authServiceStub = {
   }
 };
 
+var recaptchaStub = (secret) => {
+    return 'recaptchaStub';
+}
 var routerStub = {
   get: sinon.spy(),
   put: sinon.spy(),
@@ -36,7 +39,8 @@ var userIndex = proxyquire('./index', {
     }
   },
   './user.controller': userCtrlStub,
-  '../../auth/auth.service': authServiceStub
+  '../../auth/auth.service': authServiceStub,
+  'express-recaptcha-rest': recaptchaStub
 });
 
 describe('User API Router:', function() {
@@ -100,7 +104,7 @@ describe('User API Router:', function() {
 
     it('should route to user.controller.create', function() {
       expect(routerStub.post
-        .withArgs('/', 'userCtrl.create')
+        .withArgs('/', 'recaptchaStub', 'userCtrl.create')
         ).to.have.been.calledOnce;
     });
 
@@ -111,7 +115,7 @@ describe('User API Router:', function() {
 
     it('should route to user.controller.createAnonymous', function() {
       expect(routerStub.post
-        .withArgs('/anonymous', 'userCtrl.createAnonymous')
+        .withArgs('/anonymous', 'recaptchaStub', 'userCtrl.createAnonymous')
         ).to.have.been.calledOnce;
     });
 
