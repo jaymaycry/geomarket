@@ -39,6 +39,9 @@ export function index(req, res) {
  */
 swagger.noteEndpoint('/api/users', swaggerdoc.create, "User");
 export function create(req, res, next) {
+  // delete captcha response
+  delete req.body['g-recaptcha-response'];
+  
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
