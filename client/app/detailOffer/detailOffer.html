@@ -3,9 +3,9 @@
             
         <div class="col-xs-12 col-sm-4">
             <img ng-src="{{$ctrl.offer.picture}}" alt="{{$ctrl.offer.name}}" title="{{$ctrl.offer.name}}" class="img-responsive img-thumbnail"/>
-            <button ng-click="$ctrl.sellOffer()" type="button" class="btn btn-default btn-lg btn-block btn-success"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
-            <button ng-click="$ctrl.editOffer()" type="button" class="btn btn-default btn-lg btn-block btn-warning"><span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span> Edit offer</button>
-            <button ng-click="$ctrl.deleteOffer()" type="button" class="btn btn-default btn-lg btn-block btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
+            <button ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator" ng-click="$ctrl.sellOffer()" type="button" class="btn btn-default btn-lg btn-block btn-success"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
+            <button ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator" ui-sref="editOffer({id: $ctrl.offer._id})" type="button" class="btn btn-default btn-lg btn-block btn-warning"><span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span> Edit offer</button>
+            <button ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator"" ng-click="$ctrl.deleteOffer()" type="button" class="btn btn-default btn-lg btn-block btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
         </div>
         <div class="col-xs-12 col-sm-8">
                 

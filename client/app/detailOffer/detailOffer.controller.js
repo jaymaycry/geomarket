@@ -42,51 +42,23 @@
             var bounds = new google.maps.LatLngBounds(marker.position);
             this.offerMap.fitBounds(bounds);
         }
-        
-        goBack() {
-            this.$state.go("main");
-        }
 
         deleteOffer() {
-            if (this.owner) {
-                this.$state.go("deleteOffer", {
-                    obj: {
-                        id: this.offer._id,
-                        offerObj: this.Offer
-                    }
-                });
-            }
-            else {
-                alert("Delete offer failed: You are not the owner of this offer!")
-            }
-        }
-
-        editOffer() {
-            if (this.owner) {
-                this.$state.go("editOffer", {
-                    obj: {
-                        id: this.offer._id,
-                        offerObj: this.Offer
-                    }
-                });
-            }
-            else {
-                alert("Edit offer failed: You are not the owner of this offer!")
-            }
+            // should ask with modal
+            this.offer.active = false;
+            this.offer.$save(() => {
+                //-> should go to myOffers
+                this.$state.go('main');
+            });
         }
 
         sellOffer() {
-            if (this.owner) {
-                this.$state.go("sellOffer", {
-                    obj: {
-                        id: this.offer._id,
-                        offerObj: this.Offer
-                    }
-                });
-            }
-            else {
-                alert("Sell offer failed: You are not the owner of this offer!")
-            }
+            // should ask with modal
+            this.offer.status = 'selled';
+            this.offer.$save(() => {
+                //-> should go to myOffers
+                this.$state.go('main');
+            });
         }
     }
 
