@@ -10,7 +10,7 @@
                     <div class="col-xs-8 col-sm-8 col-md-8">
                         <h4>{{offer.name}}</h4>
                         <p>preis:{{offer.price}}</p>
-                        <p>{{offer.description}}</p>
+                        <p class="hidden-xs hidden-sm">{{offer.description}}</p>
                         <p>Erstellt am: {{offer.startDate.substring(0,10)}} Endet am: {{offer.endDate.substring(0,10)}}</p>
                     </div>
                 </div>
@@ -30,7 +30,9 @@
             Create an offer
         </button>
         <button id="btn-login" class="btn btn-lg btn-block" type="button"
-                                                            ng-hide="$ctrl.isLoggedIn()" ui-serv-active="active" ui-sref="login">
+                                                            ng-hide="$ctrl.isLoggedIn()"
+                                                            ui-serv-active="active"
+                                                            ui-sref="signup">
             <span class="glyphicon glyphicon-log-in"></span>
             log in before creating an offer
         </button>   
