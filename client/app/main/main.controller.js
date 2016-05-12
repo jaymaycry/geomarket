@@ -16,6 +16,7 @@
             this.userMap;
             this.marker;
             this.isLoggedIn = Auth.isLoggedIn;
+            this.position;
         }
 
         $onInit() {
@@ -23,6 +24,7 @@
                 timeout: 6000
                     
             }).then(position => {
+                this.position = position;
                 this.options.zoom = 13;
                 this.options.center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
@@ -45,7 +47,8 @@
 					map: this.userMap,
 					animation: google.maps.Animation.DROP,
 					position: new google.maps.LatLng(offer.loc[1],offer.loc[0]),
-                    visible: true
+                    visible: true,
+                    icon: '/assets/icons/icon.png'
 				});
 				
 

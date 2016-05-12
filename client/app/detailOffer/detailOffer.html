@@ -2,27 +2,43 @@
     <div class="row">
             
         <div class="col-xs-12 col-sm-4">
+            <!-- ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator" -->
             <img ng-src="{{$ctrl.offer.picture}}" alt="{{$ctrl.offer.name}}" title="{{$ctrl.offer.name}}" class="img-responsive img-thumbnail"/>
-            <button ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator" ng-click="$ctrl.sellOffer()" type="button" class="btn btn-default btn-lg btn-block btn-success"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
-            <button ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator" ui-sref="editOffer({id: $ctrl.offer._id})" type="button" class="btn btn-default btn-lg btn-block btn-warning"><span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span> Edit offer</button>
-            <button ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator"" ng-click="$ctrl.deleteOffer()" type="button" class="btn btn-default btn-lg btn-block btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
         </div>
         <div class="col-xs-12 col-sm-8">
                 
-            <h2>{{$ctrl.offer.name}}</h2>
+            <h4>{{$ctrl.offer.name}}</h4>
             <p>{{$ctrl.offer.description}}</p>
-            <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="$ctrl.offer.endDate"></span></p>
+            <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Ends <span am-time-ago="$ctrl.offer.endDate"></span></p>
+            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Views: {{$ctrl.offer.views}}</p>
+            <p><b>Price:</b> {{$ctrl.offer.price | currency : 'CHF ' : 2}}</p>
             
             <div class="col-xs-12 map" id ="map" ng-model="$ctrl.map"></div>
+            
             <div class="panel panel-default">
-                <div class="panel-heading">Comments:</div>
+                <div class="panel-heading"><b>{{$ctrl.offer.comments.length}} Comments:</b></div>
+                
                 <table class="table">
                     <tr ng-repeat="comment in $ctrl.offer.comments">
-                        <td><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="comment.date"></span></td>
+                        <td class="time-column"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="comment.date"></span></td>
                         <td>{{comment.text}}</td>
                     </tr>
                 </table>
+                
+                <div class="panel-footer">
+                    <div ng-show="$ctrl.isLoggedIn()" class="input-group">
+                        <input type="text" class="form-control" placeholder="Your comment..." ng-model="$ctrl.comment">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="$ctrl.addComment()">Submit</button>
+                        </span>
+                    </div>
+                    <span ng-show="!$ctrl.isLoggedIn()">Sign up to comment here.</span>
+                </div>
             </div>
+            
+            <button ng-show="$ctrl.getCurrentUser()._id === $ctrl.offer._creator" ng-click="$ctrl.sellOffer()" type="button" class="btn btn-default btn-lg btn-block btn-success"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
+            <button ng-show="$ctrl.getCurrentUser()._id === $ctrl.offer._creator" ui-sref="editOffer({id: $ctrl.offer._id})" type="button" class="btn btn-default btn-lg btn-block btn-warning"><span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span> Edit offer</button>
+            <button ng-show="$ctrl.getCurrentUser()._id === $ctrl.offer._creator" ng-click="$ctrl.deleteOffer()" type="button" class="btn btn-default btn-lg btn-block btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
         </div>
-    </div>
+    </div>$
 </div>
