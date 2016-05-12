@@ -7,12 +7,14 @@ class SignupController {
   submitted = false;
   submittedAnonymous = false;
   captchaResponse = null;
+  SignUpIsHidden = false;
   
   //end-non-standard
 
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+    
   }
 
   register(form) {
@@ -54,6 +56,9 @@ class SignupController {
         console.log(err);
       });
     }
+  }
+  showSignUpStrong(){
+      this.SignUpIsHidden = !this.SignUpIsHidden;
   }
 }
 

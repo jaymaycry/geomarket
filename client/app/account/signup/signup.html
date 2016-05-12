@@ -22,12 +22,14 @@
       </form>
     </div>
         
-        
     <!-- User signup -->
     <div class="col-sm-12">
-      <h1>Sign up</h1>
+            <h1>Sign up</h1>
+            <button type="button" class="btn btn-lg"
+                ng-click="vm.showSignUpStrong()"><span class="glyphicon glyphicon-plus" aria-hidden="true" ng-show="!vm.SignUpIsHidden"></span>
+                <span class="glyphicon glyphicon-minus" aria-hidden="true" ng-show="vm.SignUpIsHidden"></span></button>
     </div>
-    <div class="col-sm-12">
+    <div class="col-sm-12" ng-show="vm.SignUpIsHidden">
       <form class="form" name="form" ng-submit="vm.register(form)" novalidate>
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && vm.submitted,
