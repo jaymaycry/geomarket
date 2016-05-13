@@ -1,0 +1,20 @@
+<div class ="container" >
+    <ul class="list-group">
+        <li ng-repeat="offer in $ctrl.offers" class="ng-class: $ctrl.status(offer); list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" >
+            <a ng-href="/detailOffer/{{offer._id}}" ui-sref="detailOffer({id: offer._id})" class = 'offer-link'>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <img class="img-responsive"  ng-src="{{offer.picture}}" >
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <h4>{{offer.name}}</h4>
+                        <p class="hidden-xs hidden-sm">{{offer.description}}</p>
+                        <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Ends <span am-time-ago="offer.endDate"></span></p>
+                        <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Views: {{offer.views}}</p>
+                        <p>Price: {{offer.price | currency : 'CHF ' : 2}}</p>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

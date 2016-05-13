@@ -4,8 +4,7 @@
 
     class MainController {
         
-        constructor($http,Upload,$geolocation,Offer,$state,Auth) {
-            this.$http = $http;
+        constructor(Offer, Upload, Auth, $geolocation, $state) {
             this.Upload = Upload;
             this.position;
             this.$geolocation = $geolocation;
@@ -50,13 +49,6 @@
                     visible: true,
                     icon: '/assets/icons/icon.png'
 				});
-				
-
-            //marker.setMap(this.userMap);
-        }
-
-        showDetailView(offer) {
-            this.$state.go("detailOffer?" + offer._id);
         }
         
     }
