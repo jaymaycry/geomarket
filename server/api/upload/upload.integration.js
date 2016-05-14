@@ -4,9 +4,6 @@ var app = require('../..');
 import User from '../user/user.model';
 import request from 'supertest';
 
-import mongoose from 'mongoose';
-var Grid = require('gridfs-stream');
-
 var picturePath;
 
 describe('Upload API:', function() {
@@ -20,7 +17,7 @@ describe('Upload API:', function() {
         email: 'test@example.com',
         password: 'password'
       });
-
+      
       return user.save();
     });
   });
@@ -42,38 +39,24 @@ describe('Upload API:', function() {
 
   // Clear users after testing
   after(function() {
-
-    // raw mongoose cleaning statements
-    User.db.db.dropCollection('fs.files');
-    User.db.db.dropCollection('fs.chunks');
-
-    // the more elegant (but not working) GridFS StreamFile method
-    //var gfs = new Grid(mongoose.connection, mongoose.mongo);
-    //gfs.remove({
-    //  filename: 'example.jpg'
-    //}, function (err) {
-    //  if (err) return handleError(err);
-    //  console.log('success');
-    //});
-
     return User.remove();
-
-
   });
 
   describe('POST /uploads', function() {
-
+    
     it('should respond with the newly uploaded filename', function(done) {
       this.timeout(10000);
-
+      
       request(app)
         .post('/uploads')
         .attach('photo', 'server/api/upload/fixtures/example.jpg')
         .set('authorization', 'Bearer ' + token)
         .end((err, res) => {
           if (err) {
+            console.log(err);
             return done(err);
           }
+          console.log(res.body);
           expect(res.status).to.equal(200);
           picturePath = res.body;
           done();
@@ -97,5 +80,5 @@ describe('Upload API:', function() {
     });
 
   });
-
+  
 });

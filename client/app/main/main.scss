@@ -25,24 +25,56 @@
 .navbar-text {
   margin-left: 15px;
 }
-.image-upload > input
-{
-    display: none;
-}
+
+
 .cameraButton {
   position: fixed;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 70px;
 }
 #btn-camera-upload {
     display:block;
     width:100%;
+    height:70px;
+    background: #d3d3d3 ;
+    border-radius: 0px;
+}
+#btn-login {
+    display:block;
+    width:100%;
+    height:70px;
+    background: #d3d3d3 ;
+    border-radius: 0px;
+    color:#000;
 }
 #map{
     overflow:hidden;
     padding-bottom:56.25%;
     position:relative;
     height:0;
+}
+
+li a{
+    color: #000;
+    text-decoration: none;
+}
+
+li a:hover{
+    color: #000;
+    text-decoration: none;
+
+}
+li a:active{
+    color: #000;
+    text-decoration: none;
+}
+
+li a:visited{
+    color: #000;
+    text-decoration: none;
+
+}
+li h4{
+    margin-top: 0px;
 }

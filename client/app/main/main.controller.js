@@ -4,8 +4,7 @@
 
     class MainController {
         
-        constructor($http,Upload,$geolocation,Offer,$state) {
-            this.$http = $http;
+        constructor(Offer, Upload, Auth, $geolocation, $state) {
             this.Upload = Upload;
             this.position;
             this.$geolocation = $geolocation;
@@ -15,19 +14,18 @@
             this.options={};
             this.userMap;
             this.marker;
-            //this.awesomeThings = [];
+            this.isLoggedIn = Auth.isLoggedIn;
+            this.position;
         }
 
         $onInit() {
-            /*this.$http.get('/api/things').then(response => {
-              this.awesomeThings = response.data;
-              });*/
             this.$geolocation.getCurrentPosition({
-                timeout: 60000
+                timeout: 6000
                     
             }).then(position => {
+                this.position = position;
                 this.options.zoom = 13;
-                this.options.center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                this.options.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
@@ -37,30 +35,22 @@
         }
 
         uploadPicture(file){
-            if(file){
+            if(file && this.isLoggedIn()){
                 this.$state.go("createOffering",{obj: file});
             }
         
-        
         }
         
-        setMarker(){
-            console.log("is set");
-                console.log(this.offers.length);
-        };
-            //angular.element('#input_camera').trigger('click');
-
-        /*  addThing() {
-            if (this.newThing) {
-            this.$http.post('/api/things', { name: this.newThing });
-            this.newThing = '';
-            }
-            }*/
-
-        /*  deleteThing(thing) {
-            this.$http.delete('/api/things/' + thing._id);
-            }*/
-
+        setMarker(offer){
+				var marker = new google.maps.Marker({
+					map: this.userMap,
+					animation: google.maps.Animation.DROP,
+					position: new google.maps.LatLng(offer.loc[1],offer.loc[0]),
+                    visible: true,
+                    icon: '/assets/icons/icon.png'
+				});
+        }
+        
     }
 
     angular.module('geomarketApp')

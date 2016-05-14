@@ -1,16 +1,12 @@
-<div class="container">
-  <div class="row">
-    <!-- Anonymous signup -->
-    <div class="col-sm-12">
-      <h1>Sign up Anonymously</h1>
-    </div>
-    <div class="col-sm-12">
+<div class="container">  
+  <uib-accordion close-others="true">
+    <uib-accordion-group heading="Anonymous signup">
       <form class="form" name="formAnonymous" ng-submit="vm.registerAnonymous(formAnonymous)" novalidate>
         <div class="form-group" ng-class="{ 'has-success': formAnonymous.captchaResponse.$valid && vm.submittedAnonymous,
                                             'has-error': formAnonymous.captchaResponse.$invalid && vm.submittedAnonymous }">
           <div vc-recaptcha name="captchaResponse" key="'6LcaMB8TAAAAAMp_v_Ou1Yx7cNpyKir6uISIvqUv'" ng-model="vm.captchaResponse" required></div>
           <p class="help-block"
-             ng-show="formAnonymous.captchaResponse.$invalid && vm.submittedAnonymous">
+            ng-show="formAnonymous.captchaResponse.$invalid && vm.submittedAnonymous">
             Captcha must be set.
           </p>
         </div>
@@ -20,14 +16,8 @@
           </button>
         </div>
       </form>
-    </div>
-        
-        
-    <!-- User signup -->
-    <div class="col-sm-12">
-      <h1>Sign up</h1>
-    </div>
-    <div class="col-sm-12">
+    </uib-accordion-group>
+    <uib-accordion-group heading="Signup">
       <form class="form" name="form" ng-submit="vm.register(form)" novalidate>
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && vm.submitted,
@@ -35,7 +25,7 @@
           <label>Name</label>
 
           <input type="text" name="name" class="form-control" ng-model="vm.user.name"
-                 required/>
+                required/>
           <p class="help-block" ng-show="form.name.$error.required && vm.submitted">
             A name is required
           </p>
@@ -46,8 +36,8 @@
           <label>Email</label>
 
           <input type="email" name="email" class="form-control" ng-model="vm.user.email"
-                 required
-                 mongoose-error/>
+                required
+                mongoose-error/>
           <p class="help-block" ng-show="form.email.$error.email && vm.submitted">
             Doesn't look like a valid email.
           </p>
@@ -64,11 +54,11 @@
           <label>Password</label>
 
           <input type="password" name="password" class="form-control" ng-model="vm.user.password"
-                 ng-minlength="3"
-                 required
-                 mongoose-error/>
+                ng-minlength="3"
+                required
+                mongoose-error/>
           <p class="help-block"
-             ng-show="(form.password.$error.minlength || form.password.$error.required) && vm.submitted">
+            ng-show="(form.password.$error.minlength || form.password.$error.required) && vm.submitted">
             Password must be at least 3 characters.
           </p>
           <p class="help-block" ng-show="form.password.$error.mongoose">
@@ -80,10 +70,10 @@
                                             'has-error': form.confirmPassword.$invalid && vm.submitted }">
           <label>Confirm Password</label>
           <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                 match="vm.user.password"
-                 ng-minlength="3" required/>
+                match="vm.user.password"
+                ng-minlength="3" required/>
           <p class="help-block"
-             ng-show="form.confirmPassword.$error.match && vm.submitted">
+            ng-show="form.confirmPassword.$error.match && vm.submitted">
             Passwords must match.
           </p>
         </div>
@@ -92,7 +82,7 @@
                                             'has-error': form.captchaResponse.$invalid && vm.submitted }">
           <div vc-recaptcha name="captchaResponse" key="'6LcaMB8TAAAAAMp_v_Ou1Yx7cNpyKir6uISIvqUv'" ng-model="vm.captchaResponse" required></div>
           <p class="help-block"
-             ng-show="form.captchaResponse.$invalid && vm.submitted">
+            ng-show="form.captchaResponse.$invalid && vm.submitted">
             Captcha must be set.
           </p>
         </div>
@@ -107,8 +97,7 @@
         </div>
 
       </form>
-    </div>
-  </div>
-  <hr>
+    </uib-accordion-group>
+  </uib-accordion>
 </div>
 <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script> 

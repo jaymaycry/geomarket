@@ -3,8 +3,8 @@
 angular.module('geomarketApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('create', {
-        url: '/offer/create',
-        template: '<create></create>'
+      .state('editOffer', {
+        url: '/editOffer/:id',
+        template: '<edit-offer></edit-offer>'
       });
   });

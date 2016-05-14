@@ -89,6 +89,13 @@ function attachComment(req, res) {
   }
 }
 
+function increaseViews() {
+  return function(offer) {
+    offer.views++;
+    return offer.save();
+  }
+}
+
 swagger.noteEndpoint('/api/offers', swaggerdoc.query, "Offer");
 // Gets a list of Offers
 export function index(req, res) {
@@ -142,6 +149,7 @@ export function show(req, res) {
   return Offer.findById(req.params.id)
     .exec()
     .then(handleEntityNotFound(res))
+    .then(increaseViews())
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

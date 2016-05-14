@@ -1,0 +1,18 @@
+li.open {
+  padding-left:20px;
+}
+li.deleted {
+  border-left: 5px solid red;
+}
+
+li.selled {
+  border-left: 5px solid limegreen;
+}
+
+li.expired {
+  border-left: 5px solid grey;
+}
+
+li.scheduled {
+  border-left: 5px solid orange;
+}
