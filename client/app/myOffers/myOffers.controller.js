@@ -2,10 +2,12 @@
 (function(){
 
 class MyOffersComponent {
-  constructor(Offer,$state) {
+  constructor(Offer,$state, Auth) {
     this.Offer = Offer;
     this.$state = $state;
     this.offers;
+    this.isLoggedIn = Auth.isLoggedIn;
+    this.file;
   }
   
   $onInit() {
@@ -28,6 +30,13 @@ class MyOffersComponent {
       }
     }
     return "open";
+  }
+  
+  uploadPicture(file){
+    if(file && this.isLoggedIn()){
+        this.$state.go("createOffering",{obj: file});
+    }
+
   }
 }
 
