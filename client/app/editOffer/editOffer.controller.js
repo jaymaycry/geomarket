@@ -50,15 +50,21 @@ class EditOfferComponent {
     submit() {
         this.controlOffering(this.offer);
         if (this.file) {
-            this.upload(this.file);
+            this.upload(this.file)
+            .then(resp => {
+                this.offer.picture = resp.data;
+                this.offer.$update();
+                this.$state.go('myOffers');
+            });
         }
         else {
-            console.log("nope");
+            this.offer.$update();
+            this.$state.go('myOffers');
         }
     }
     reset() {
-        console.log("reset");
-        this.$state.go("main");
+        console.log('reset');
+        this.$state.go('myOffers');
     }
 
     updateGeolocation() {
@@ -72,17 +78,12 @@ class EditOfferComponent {
     }
 
     upload(file) {
-        this.Upload.upload({
+        return this.Upload.upload({
             url: '/uploads/',
             data: { photo: file }
-        }).then(resp => {
-            
-            this.offer.picture = resp.data;
-            this.offer.$save();
-            this.$state.go("main");
-
         });
     }
+    
     uploadPicture(file) {
         if (file) {
             this.file = file;
@@ -93,7 +94,7 @@ class EditOfferComponent {
         var message = " ";
         try {
             if (!offer.name.trim()) {
-                throw ("no name defined");
+                throw ("No name defined");
             }
 
             if (isNaN(offer.price)) {

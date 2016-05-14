@@ -1,4 +1,4 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+$icon-font-path: "../bower_components/bootstrap/fonts/";
 @import '../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 $fa-font-path: "../bower_components/font-awesome/fonts";
 @import '../bower_components/font-awesome/scss/font-awesome';
@@ -18,12 +18,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 /* inject:scss */
 @import 'admin/admin';
 @import 'createOffering/createOffering';
-@import 'deleteOffer/deleteOffer';
 @import 'detailOffer/detailOffer';
 @import 'editOffer/editOffer';
 @import 'main/main';
 @import 'myOffers/myOffers';
-@import 'sellOffer/sellOffer';
 @import '../components/footer/footer';
 @import '../components/modal/modal';
 /* endinject */

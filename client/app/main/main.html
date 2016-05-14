@@ -22,18 +22,11 @@
 </div>
 <div class = 'cameraButton'>
     <div class="" id= "capture"  >
-        <button id="btn-camera-upload" type="button" class="btn btn-lg
-        btn-block" ngf-select="$ctrl.uploadPicture($file)"
-                   ng-model="$ctrl.file" ngf-pattern="'image/*'"
-                                         ngf-accept="'image/*'" ngf-max-size="20MB" capture="camera"
-                                                                                    ng-show="$ctrl.isLoggedIn()">
+        <button id="btn-camera-upload" type="button" class="btn btn-l btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera" ng-show="$ctrl.isLoggedIn()">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
         </button>
-        <button id="btn-login" class="btn btn-lg btn-block" type="button"
-                                                            ng-hide="$ctrl.isLoggedIn()"
-                                                            ui-serv-active="active"
-                                                            ui-sref="signup">
+        <button id="btn-login" class="btn btn-lg btn-block" type="button" ng-hide="$ctrl.isLoggedIn()" ui-serv-active="active" ui-sref="signup">
             <span class="glyphicon glyphicon-log-in"></span>
             log in before creating an offer
         </button>   
