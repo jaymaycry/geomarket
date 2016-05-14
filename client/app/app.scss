@@ -30,3 +30,8 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
     height: 34px;
 }
+
+.btn-lg, .btn-group-lg > .btn {
+    font-size: 14px;
+
+}
