@@ -16,6 +16,9 @@
             }).then(position => {
                 this.offer = new this.Offer();
                 this.offer.loc = [position.coords.longitude, position.coords.latitude];
+                this.offer.startDate = new Date();
+                this.offer.endDate = new Date();
+                this.offer.endDate.setDate(this.offer.endDate.getDate() + 1);
                 this.file = this.$state.params.obj;
             });  
         }
