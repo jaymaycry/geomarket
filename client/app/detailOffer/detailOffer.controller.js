@@ -15,7 +15,7 @@
             this.map;
             this.comment = "";
             this.$uibModal = $uibModal;
-            this.active = false;
+            this.active = true;
         }
         $onInit() {
             this.owner = false;
@@ -34,7 +34,6 @@
                     visible: true,
                     icon: '/assets/icons/icon.png'
                 });
-                this.active = offer.status == "open" && (typeof (offer.active) == 'undefined' || offer.active) ? true : false;
             }, (error) => {
                 this.active = false;
             });
@@ -46,6 +45,15 @@
                 this.offer.comments = reloadedOffer.comments;
             });
             this.comment = "";
+        }
+        
+        commentClass(creatorId) {
+            if (creatorId === this.offer._creator) {
+                return "comment-creator";
+            }
+            if (creatorId === this.getCurrentUser._id) {
+                return "comment-self";
+            }
         }
 
         setMarker(offer){

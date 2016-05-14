@@ -25,20 +25,21 @@
                 <div class="panel-heading"><b>{{$ctrl.offer.comments.length}} Comments:</b></div>
 
                 <table class="table">
-                    <tr ng-repeat="comment in $ctrl.offer.comments">
+                    <tr ng-repeat="comment in $ctrl.offer.comments" ng-class="$ctrl.commentClass(comment._creator)">
                         <td class="time-column"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="comment.date"></span></td>
                         <td>{{comment.text}}</td>
                     </tr>
                 </table>
 
                 <div class="panel-footer">
-                    <div ng-show="$ctrl.offer.status !=='selled'&& $ctrl.isLoggedIn()" class="input-group">
+                    <div ng-show="$ctrl.offer.status !=='selled' && $ctrl.offer.active && $ctrl.isLoggedIn()" class="input-group">
                         <input type="text" class="form-control" placeholder="Your comment..." ng-model="$ctrl.comment">
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="button" ng-click="$ctrl.addComment()">Submit</button>
                         </span>
                     </div>
-                    <span ng-show="$ctrl.offer.status !=='selled' && !$ctrl.isLoggedIn()">Sign up to comment here.</span>
+                    <span ng-show="$ctrl.offer.status !=='selled' && $ctrl.offer.active && !$ctrl.isLoggedIn()">Sign up to comment here.</span>
+                    <span ng-show="$ctrl.offer.status === 'selled' || !$ctrl.offer.active">Offer closed.</span>
                 </div>
             </div>
 

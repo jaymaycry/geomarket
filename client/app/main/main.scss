@@ -37,16 +37,17 @@
     display:block;
     width:100%;
     height:70px;
-    background: #d3d3d3 ;
+    background: $gm-color-blue;
     border-radius: 0px;
+    color: #ffffff;
 }
 #btn-login {
     display:block;
     width:100%;
     height:70px;
-    background: #d3d3d3 ;
+    background: $gm-color-blue ;
     border-radius: 0px;
-    color:#000;
+    color:#fff;
 }
 #map{
     overflow:hidden;
