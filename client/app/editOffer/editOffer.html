@@ -2,11 +2,12 @@
     <!--<div class="container">-->
     <div class="row">
         <div class="col-xs-12 col-sm-4">
-            <img id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.file" />
+            <img ng-show="$ctrl.file" id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.file" />
+            <img ng-hide="$ctrl.file" id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.offer.picture" />
         </div>
         <div class="col-xs-12 col-sm-8">
             <div class="map" id="map" ng-model="$ctrl.map"></div>
-            <button type="button" class="btn btn-default btn-lg btn-block btn-warning" ng-click="$ctrl.updateGeolocation()"><span class="glyphicon glyphicon-pushpin"></span> Take current position as new location</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="$ctrl.updateGeolocation()"><span class="glyphicon glyphicon-pushpin"></span> Take current position as new location</button>
         </div>
     </div>
     <!--</div>-->
