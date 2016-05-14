@@ -17,7 +17,6 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 // Component styles are injected through grunt
 /* inject:scss */
 @import 'admin/admin';
-@import 'createComment/createComment';
 @import 'createOffering/createOffering';
 @import 'deleteOffer/deleteOffer';
 @import 'detailOffer/detailOffer';
@@ -28,3 +27,8 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 @import '../components/footer/footer';
 @import '../components/modal/modal';
 /* endinject */
+
+
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+    height: 34px;
+}

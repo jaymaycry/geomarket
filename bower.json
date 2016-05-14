@@ -25,6 +25,7 @@
     "angular-mocks": "~1.5.0"
   },
   "resolutions": {
-    "lodash": "3.X - 4.X"
+    "lodash": "3.X - 4.X",
+    "angular": "1.*"
   }
 }

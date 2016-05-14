@@ -2,17 +2,48 @@
 (function(){
 
 class EditOfferComponent {
-    constructor($state, $http) {
-      this.offer;
-      this.$state = $state;
+    constructor($state, $stateParams, $geolocation, Offer, Auth, Upload) {
+        this.$state = $state;
+        this.$stateParams = $stateParams;
+        this.Offer = Offer;
+        this.Upload = Upload;
+        this.isLoggedIn = Auth.isLoggedIn;
+        this.getCurrentUser = Auth.getCurrentUser;
+        this.offer;
+        this.file;
+        this.offerMap;
+        this.owner;
+        this.options = {};
+        this.map;
+        this.comment = "";
+        this.$geolocation = $geolocation;
     }
     $onInit() {
         this.owner = false;
-        this.Offer = this.$state.params.obj.offerObj;
         var _this = this;
+        this.offer = this.Offer.get({ id: this.$stateParams.id }, (offer) => {
+            _this.offer.name = offer.name;
+            _this.offer.description = offer.description;
+            _this.offer.startDate = new Date(offer.startDate);
+            _this.offer.endDate = new Date(offer.endDate);
+            _this.offer.price = offer.price;
+            _this.file = this.offer.picture;
+            _this.loadMap(offer);
+        });
 
-        this.$http.get('/api/offers/' + this.$state.params.obj.id).then(response => {
-            _this.offer = response.data;
+    }
+
+    loadMap(offer) {
+        this.options.zoom = 13;
+        this.options.center = new google.maps.LatLng(offer.loc[1], offer.loc[0]);
+        this.options.mapTypeId = google.maps.MapTypeId.ROADMAP;
+        this.userMap = new google.maps.Map(map, this.options);
+        var marker = new google.maps.Marker({
+            map: this.userMap,
+            animation: google.maps.Animation.DROP,
+            position: new google.maps.LatLng(offer.loc[1], offer.loc[0]),
+            visible: true,
+            icon: '/assets/icons/icon.png'
         });
     }
 
@@ -28,6 +59,16 @@ class EditOfferComponent {
     reset() {
         console.log("reset");
         this.$state.go("main");
+    }
+
+    updateGeolocation() {
+        var _this = this;
+        this.$geolocation.getCurrentPosition({
+            timeout: 6000
+        }).then(position => {
+            _this.offer.loc = [position.coords.longitude, position.coords.latitude];
+            _this.loadMap(_this.offer);
+        });
     }
 
     upload(file) {
@@ -46,8 +87,6 @@ class EditOfferComponent {
         if (file) {
             this.file = file;
         }
-
-
     }
 
     controlOffering(offer) {
