@@ -12,25 +12,17 @@ class EditOfferComponent {
         this.offer;
         this.file;
         this.offerMap;
-        this.owner;
         this.options = {};
         this.map;
         this.comment = "";
         this.$geolocation = $geolocation;
     }
     $onInit() {
-        this.owner = false;
-        var _this = this;
         this.offer = this.Offer.get({ id: this.$stateParams.id }, (offer) => {
-            _this.offer.name = offer.name;
-            _this.offer.description = offer.description;
-            _this.offer.startDate = new Date(offer.startDate);
-            _this.offer.endDate = new Date(offer.endDate);
-            _this.offer.price = offer.price;
-            _this.file = this.offer.picture;
-            _this.loadMap(offer);
+            this.offer.startDate = new Date(offer.startDate);
+            this.offer.endDate = new Date(offer.endDate);
+            this.loadMap(offer);
         });
-
     }
 
     loadMap(offer) {
@@ -68,12 +60,11 @@ class EditOfferComponent {
     }
 
     updateGeolocation() {
-        var _this = this;
         this.$geolocation.getCurrentPosition({
             timeout: 6000
         }).then(position => {
-            _this.offer.loc = [position.coords.longitude, position.coords.latitude];
-            _this.loadMap(_this.offer);
+            this.offer.loc = [position.coords.longitude, position.coords.latitude];
+            this.loadMap(this.offer);
         });
     }
 
