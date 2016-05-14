@@ -58,7 +58,7 @@
             var message = " ";
             try{
                 if (!offer.name.trim()){
-                    throw ("no name defined");
+                    throw ("No name defined");
                 }
                 
                 if(isNaN(offer.price) ){

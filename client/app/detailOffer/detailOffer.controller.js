@@ -58,18 +58,18 @@
         deleteOffer() {
             // should ask with modal
             this.offer.active = false;
-            this.offer.$save(() => {
+            this.offer.$update(() => {
                 //-> should go to myOffers
-                this.$state.go('main');
+                this.$state.go('myOffers');
             });
         }
 
         sellOffer() {
             // should ask with modal
             this.offer.status = 'selled';
-            this.offer.$save(() => {
+            this.offer.$update(() => {
                 //-> should go to myOffers
-                this.$state.go('main');
+                this.$state.go('myOffers');
             });
         }
     }

@@ -2,59 +2,55 @@
 (function(){
 
 class EditOfferComponent {
-    constructor($state, $http) {
-      this.offer;
+    constructor(Offer, $state, $stateParams) {
+      this.Offer = Offer;
       this.$state = $state;
+      this.$stateParams = $stateParams;
+      this.offer;
     }
     $onInit() {
         this.owner = false;
-        this.Offer = this.$state.params.obj.offerObj;
-        var _this = this;
-
-        this.$http.get('/api/offers/' + this.$state.params.obj.id).then(response => {
-            _this.offer = response.data;
-        });
+        this.offer = this.Offer.get({id: this.$stateParams.id});
     }
 
     submit() {
         this.controlOffering(this.offer);
         if (this.file) {
-            this.upload(this.file);
+            this.upload(this.file)
+            .then(resp => {
+                this.offer.picture = resp.data;
+                this.offer.$update();
+                this.$state.go('myOffers');
+            });
         }
         else {
-            console.log("nope");
+            this.offer.$update();
+            this.$state.go('myOffers');
         }
     }
     reset() {
-        console.log("reset");
-        this.$state.go("main");
+        console.log('reset');
+        this.$state.go('myOffers');
     }
 
     upload(file) {
-        this.Upload.upload({
+        return this.Upload.upload({
             url: '/uploads/',
             data: { photo: file }
-        }).then(resp => {
-            
-            this.offer.picture = resp.data;
-            this.offer.$save();
-            this.$state.go("main");
-
         });
     }
+    
     uploadPicture(file) {
         if (file) {
             this.file = file;
         }
-
-
     }
 
     controlOffering(offer) {
         var message = " ";
         try {
             if (!offer.name.trim()) {
-                throw ("no name defined");
+                throw ("No name defined");
             }
 
             if (isNaN(offer.price)) {
