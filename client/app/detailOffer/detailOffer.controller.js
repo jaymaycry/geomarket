@@ -2,7 +2,7 @@
 (function () {
 
     class DetailOfferComponent {
-        constructor($state, $stateParams, Offer, Auth) {
+        constructor($state, $stateParams, Offer, Auth, $uibModal) {
             this.$state = $state;
             this.$stateParams = $stateParams;
             this.Offer = Offer;
@@ -14,7 +14,8 @@
             this.options = {};
             this.map;
             this.comment = "";
-           
+            this.$uibModal = $uibModal;
+            this.active = false;
         }
         $onInit() {
             this.owner = false;
@@ -23,7 +24,8 @@
                 this.offer.endDate = new Date(this.offer.endDate);
                 this.options.zoom = 13;
                 this.options.center = new google.maps.LatLng(offer.loc[1],offer.loc[0]);
-                this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
+                this.options.mapTypeId = google.maps.MapTypeId.ROADMAP;
+                this.options.draggable = ($(window).width() < 1025) == false;
                 this.userMap = new google.maps.Map(map,this.options);
                 var marker = new google.maps.Marker({
                     map: this.userMap,
@@ -32,6 +34,9 @@
                     visible: true,
                     icon: '/assets/icons/icon.png'
                 });
+                this.active = offer.status == "open" && (typeof (offer.active) == 'undefined' || offer.active) ? true : false;
+            }, (error) => {
+                this.active = false;
             });
 
         }
@@ -55,22 +60,47 @@
             this.offerMap.fitBounds(bounds);
         }
 
+        openDeleteOffer() {
+            var modalInstance = this.$uibModal.open({
+                animation: true,
+                templateUrl: 'deleteOffer.html',
+                controller: 'DeleteOfferController'
+            });
+
+            modalInstance.result.then((active) => {
+                this.offer.active = active;
+                this.deleteOffer();
+            });
+        }
+
+        openSellOffer() {
+            var modalInstance = this.$uibModal.open({
+                animation: true,
+                templateUrl: 'sellOffer.html',
+                controller: 'SellOfferController'
+            });
+            modalInstance.result.then((status) => {
+                this.offer.status = status;
+                this.sellOffer();
+            });
+        }
+
         deleteOffer() {
-            // should ask with modal
-            this.offer.active = false;
+            //this.offer.active = false;
             this.offer.$update(() => {
-                //-> should go to myOffers
                 this.$state.go('myOffers');
             });
         }
 
         sellOffer() {
-            // should ask with modal
-            this.offer.status = 'selled';
+            //this.offer.status = 'selled';
             this.offer.$update(() => {
-                //-> should go to myOffers
                 this.$state.go('myOffers');
             });
+        }
+
+        quit() {
+            this.$state.go('main');
         }
     }
 

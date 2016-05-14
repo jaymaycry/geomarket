@@ -25,7 +25,7 @@
             }).then(position => {
                 this.position = position;
                 this.options.zoom = 13;
-                this.options.center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                this.options.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});

@@ -49,7 +49,7 @@ class EditOfferComponent {
 
     submit() {
         this.controlOffering(this.offer);
-        if (this.file) {
+        if (this.file && this.file != this.offer.picture) {
             this.upload(this.file)
             .then(resp => {
                 this.offer.picture = resp.data;
@@ -61,10 +61,6 @@ class EditOfferComponent {
             this.offer.$update();
             this.$state.go('myOffers');
         }
-    }
-    reset() {
-        console.log('reset');
-        this.$state.go('myOffers');
     }
 
     updateGeolocation() {
