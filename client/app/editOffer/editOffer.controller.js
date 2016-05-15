@@ -2,6 +2,16 @@
 (function () {
 
     class EditOfferComponent {
+        /**
+         * @description Represents an offer to edit.
+         * @constructor
+         * @param {object} $state - The $state service.
+         * @param {object} $stateParams - Contains information about the url.
+         * @param {Offer} Offer - The offer service.
+         * @param {Auth) Auth - The authentication service.
+         * @param {Upload} Upload - The service to Upload files.
+         * @param {$geolocation} $geolocation - The service to get the geolocation.
+         */
         constructor($state, $stateParams, $geolocation, Offer, Auth, Upload) {
             this.$state = $state;
             this.$stateParams = $stateParams;
@@ -21,6 +31,10 @@
             this.invalidPrice = false;
             this.invalidName = false;
         }
+
+        /**
+         * @description Initialize the offer, loads the map.
+         */
         $onInit() {
             this.offer = this.Offer.get({ id: this.$stateParams.id }, (offer) => {
                 this.offer.startDate = new Date(offer.startDate);
@@ -29,6 +43,10 @@
             });
         }
 
+        /**
+         * @description Loads the map with the offers geolocation.
+         * @param (object) The current offer.
+         */
         loadMap(offer) {
             this.options.zoom = 13;
             this.options.center = new google.maps.LatLng(offer.loc[1], offer.loc[0]);
@@ -43,6 +61,9 @@
             });
         }
 
+        /**
+         * @description Updates the offer object in the database with the new data.
+         */
         submit() {
 
             this.controlOffering(this.offer);
@@ -60,6 +81,9 @@
             }
         }
 
+        /**
+         * @description Updates the geoLocation from the current offer to the current position.
+         */
         updateGeolocation() {
             this.$geolocation.getCurrentPosition({
                 timeout: 6000
@@ -69,6 +93,10 @@
             });
         }
 
+        /**
+        * @description Uploads the file to the database.
+        * @param (file) File to be uploaded.
+        */
         upload(file) {
             return this.Upload.upload({
                 url: '/uploads/',
@@ -76,12 +104,20 @@
             });
         }
 
+        /**
+        * @description Check if file is a picture.
+        * @param (file) File to be uploaded.
+        */
         uploadPicture(file) {
             if (file) {
                 this.file = file;
             }
         }
 
+        /**
+        * @description Check if the offer datas are valid.
+        * @param (object) The offer object.
+        */
         controlOffering(offer) {
             var message = " ";
             try {

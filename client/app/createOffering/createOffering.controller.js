@@ -2,6 +2,14 @@
 (function () {
 
     class CreateOfferingComponent {
+        /**
+         * @description Represents an offer to create.
+         * @constructor
+         * @param {object} $state - The $state service.
+         * @param {Offer} Offer - The offer service.
+         * @param {Upload} Upload - The service to Upload files.
+         * @param {$geolocation} $geolocation - The service to get the geolocation.
+         */
         constructor(Offer, $geolocation, Upload, $state) {
             this.Upload = Upload;
             this.Offer = Offer;
@@ -13,6 +21,9 @@
             this.invalidPrice = false;
             this.invalidName = false;
         }
+        /**
+         * @description Initialize the offer
+         */
         $onInit() {
 
             this.$geolocation.getCurrentPosition({
@@ -26,7 +37,9 @@
                 this.file = this.$state.params.obj;
             });
         }
-
+        /**
+         * @description Creates the offer object in the database with the given data.
+         */
         submit() {
             this.controlOffering(this.offer);
             if (this.file) {
@@ -36,11 +49,19 @@
                 console.log("nope");
             }
         }
+
+        /**
+         * @description Escapes the create offer, redirects to the main page.
+         */
         reset() {
             console.log("reset");
             this.$state.go("main");
         }
 
+        /**
+        * @description Uploads the file to the database.
+        * @param (file) File to be uploaded.
+        */
         upload(file) {
             this.Upload.upload({
                 url: '/uploads/',
@@ -53,6 +74,11 @@
 
             });
         }
+
+        /**
+        * @description Check if file is a picture.
+        * @param (file) File to be uploaded.
+        */
         uploadPicture(file) {
             if (file) {
                 this.file = file;
@@ -61,6 +87,11 @@
 
         }
 
+
+        /**
+        * @description Check if the offer datas are valid.
+        * @param (object) The offer object.
+        */
         controlOffering(offer) {
             var message = " ";
             try {
