@@ -1,4 +1,5 @@
-<div  ng-show="$ctrl.position" class ="container" >
+<span us-spinner="{opacity: 0.25, color: '#00a6ff'}" spinner-on="$ctrl.showSpinner"></span>
+<div ng-hide="$ctrl.showInfo" class ="container" >
     <div id ="map" ng-model="$ctrl.map" ></div>
     <ul class="list-group">
         <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" >
@@ -19,7 +20,8 @@
         </li>
     </ul>
 </div>
-<div ng-show="!$ctrl.position" class="container">
+
+<div ng-show="$ctrl.showInfo" class="container">
     <div class="jumbotron">
     <h1>Hello User!</h1>
     <p>To use our services, please activate the <b>location sharing</b> in your browsers settings.</p>

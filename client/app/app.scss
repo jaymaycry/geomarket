@@ -64,6 +64,28 @@ $gm-color-blue2: #0091DE;
    margin:0px;
 }
 
-.jumbotron > h1 {
+h1, .jumbotron > h1 {
     color: $gm-color-blue;
+    font-size: 36px;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+.bs-callout-info {
+    border-left-color: $gm-color-blue;
+}
+
+.bs-callout-info h4 {
+    color: $gm-color-blue;
+}
+
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
 }
