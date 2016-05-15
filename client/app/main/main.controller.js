@@ -11,7 +11,7 @@
             this.$state=$state;
             this.Offer = Offer;
             this.offers = [];
-            this.options={};
+            this.options = {};
             this.userMap;
             this.marker;
             this.isLoggedIn = Auth.isLoggedIn;

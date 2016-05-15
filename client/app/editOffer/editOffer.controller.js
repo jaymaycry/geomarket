@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-
     class EditOfferComponent {
         /**
          * @description Represents an offer to edit.
@@ -51,7 +50,7 @@
             this.options.zoom = 13;
             this.options.center = new google.maps.LatLng(offer.loc[1], offer.loc[0]);
             this.options.mapTypeId = google.maps.MapTypeId.ROADMAP;
-            this.userMap = new google.maps.Map(map, this.options);
+            this.userMap = new google.maps.Map(this.map, this.options);
             var marker = new google.maps.Marker({
                 map: this.userMap,
                 animation: google.maps.Animation.DROP,
@@ -67,7 +66,7 @@
         submit() {
 
             this.controlOffering(this.offer);
-            if (this.file && this.file != this.offer.picture) {
+            if (this.file && this.file !== this.offer.picture) {
                 this.upload(this.file)
                 .then(resp => {
                     this.offer.picture = resp.data;

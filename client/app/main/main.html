@@ -1,4 +1,4 @@
-<div class ="container" >
+<div  ng-show="$ctrl.position" class ="container" >
     <div id ="map" ng-model="$ctrl.map" ></div>
     <ul class="list-group">
         <li ng-repeat="offer in $ctrl.offers" class="list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" >
@@ -18,7 +18,12 @@
             </a>
         </li>
     </ul>
-
+</div>
+<div ng-show="!$ctrl.position" class="container">
+    <div class="jumbotron">
+    <h1>Hello User!</h1>
+    <p>To use our services, please activate the <b>location sharing</b> in your browsers settings.</p>
+    </div>
 </div>
 <div class = 'cameraButton'>
     <div class="" id= "capture"  >
