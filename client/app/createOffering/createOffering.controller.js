@@ -69,8 +69,6 @@
                 if (offer.startDate != null) {
                     if (offer.startDate.getYear() < today.getYear() || offer.startDate.getMonth() < today.getMonth() || offer.startDate.getDate() < today.getDate()) {
                         this.invalidStartDate = true;
-                        throw ("Startdate is smaller than Date now.");
-
                     }
                     else {
                         this.invalidStartDate = false;
@@ -80,7 +78,6 @@
                 if (offer.endDate != null) {
                     if (offer.endDate.getYear() < offer.startDate.getYear() || offer.endDate.getMonth() < offer.startDate.getMonth() || offer.endDate.getDate() < offer.startDate.getDate()) {
                         this.invalidEndDate = true;
-                        throw ("Enddate is smaller than Startdate.");
                     }
                     else {
                         this.invalidEndDate = false;
@@ -89,7 +86,6 @@
 
                 if (typeof (offer.name) == 'undefined' || !offer.name.trim()) {
                     this.invalidName = true;
-                    throw ("No name defined.");
                 }
                 else {
                     this.invalidName = false;
@@ -97,10 +93,13 @@
 
                 if (isNaN(offer.price) || offer.price < 0) {
                     this.invalidPrice = true;
-                    throw "Price is not a number.";
                 }
                 else {
                     this.invalidPrice = false;
+                }
+
+                if (this.invalidStartDate || this.invalidEndDate || this.invalidName || this.invalidPrice) {
+                    throw ("Invalid values in offer form.");
                 }
             }
             catch (e) {
