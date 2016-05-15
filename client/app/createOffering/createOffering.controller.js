@@ -29,6 +29,7 @@
             this.$geolocation.getCurrentPosition({
                 timeout: 6000
             }).then(position => {
+                this.position = position;
                 this.offer = new this.Offer();
                 this.offer.loc = [position.coords.longitude, position.coords.latitude];
                 this.offer.startDate = new Date();
