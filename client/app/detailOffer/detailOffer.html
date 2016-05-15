@@ -38,7 +38,7 @@
                             <button class="btn btn-primary" type="button" ng-click="$ctrl.addComment()">Submit</button>
                         </span>
                     </div>
-                    <span ng-show="$ctrl.offer.status !=='selled' && $ctrl.offer.active && !$ctrl.isLoggedIn()">Sign up to comment here.</span>
+                    <span ng-show="$ctrl.offer.status !=='selled' && $ctrl.offer.active && !$ctrl.isLoggedIn()"><a ui-sref="signup" href="/signup">Sign up</a> to comment here.</span>
                     <span ng-show="$ctrl.offer.status === 'selled' || !$ctrl.offer.active">Offer closed.</span>
                 </div>
             </div>
