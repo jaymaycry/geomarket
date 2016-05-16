@@ -7,7 +7,7 @@
          * @constructor
          * @param {object} $state - The $state service.
          * @param {Offer} Offer - The offer service.
-         * @param {Auth) Auth - The authentication service.
+         * @param {Auth} Auth - The authentication service.
          */
         constructor(Offer, $state, Auth) {
             this.Offer = Offer;
@@ -24,7 +24,7 @@
         }
         /**
         * @description Gives the status of a given offer object..
-        * param (object) A offer object.
+        * param {object} A offer object.
         * @returns {string} The status class.
         */
         status(offer) {
