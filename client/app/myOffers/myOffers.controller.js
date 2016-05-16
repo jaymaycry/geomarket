@@ -24,7 +24,7 @@
         $onInit() {
             this.offers = this.Offer.my({}, (offers) => {
                     this.showSpinner = false;
-                    if (offers === []) {
+                    if (offers.length === 0) {
                         this.showInfo = true;
                     }
                 });
