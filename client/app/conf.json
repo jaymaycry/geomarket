@@ -1,0 +1,35 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "include": ["main/main.controller.js",
+                    "createOffering/createOffering.controller.js",
+                    "editOffer/editOffer.controller.js",
+                    "detailOffer/detailOffer.controller.js",
+                    "detailOffer/deleteOffer/deleteOffer.controller.js",
+                    "detailOffer/sellOffer/sellOffer.controller.js",
+                    "myOffers/myOffers.controller.js",
+                    "offer/offer.service.js",
+                    "account/login/login.controller.js",
+                    "account/settings/settings.controller.js",
+                    "admin/admin.controller.js"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+    "template": "templates/default",  
+    "encoding": "utf8",               
+    "destination": "./frontendDocumentation/",
+    "recurse": true
+    },
+
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}
+
+
