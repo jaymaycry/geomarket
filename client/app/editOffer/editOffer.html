@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-4">
-            <img ng-show="$ctrl.file" id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.file" />
-            <img ng-hide="$ctrl.file" id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.offer.picture" />
-            <button type="button" class="btn btn-default btn-lg btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera">
+            <img ng-show="$ctrl.file" id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-src="$ctrl.file" />
+            <img ng-hide="$ctrl.file" id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-src="$ctrl.offer.picture" />
+            <button type="button" class="btn btn-default btn-lg btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" ngf-fix-orientation="true" capture="camera">
                 <span class="glyphicon glyphicon-camera"></span>
                 Take new picture
             </button>
