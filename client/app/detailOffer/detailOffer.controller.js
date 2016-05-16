@@ -8,7 +8,7 @@
          * @param {object} $state - The $state service.
          * @param {object} $stateParams - Contains information about the url.
          * @param {Offer} Offer - The offer service.
-         * @param {Auth) Auth - The authentication service.
+         * @param {Auth} Auth - The authentication service.
          * @param {$uibModal} $uibModal - The service to create modal windows.
          */
         constructor($state, $stateParams, Offer, Auth, $uibModal) {
