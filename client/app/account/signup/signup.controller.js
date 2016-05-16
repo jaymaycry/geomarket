@@ -5,11 +5,16 @@ class SignupController {
   user = {};
   errors = {};
   submitted = false;
+  submittedAnonymous = false;
+  captchaResponse = null;
+  SignUpIsHidden = false;
+  
   //end-non-standard
 
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+    
   }
 
   register(form) {
@@ -19,7 +24,8 @@ class SignupController {
       this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
-        password: this.user.password
+        password: this.user.password,
+        'g-recaptcha-response': this.captchaResponse
       })
       .then(() => {
         // Account created, redirect to home
@@ -36,6 +42,23 @@ class SignupController {
         });
       });
     }
+  }
+  
+  registerAnonymous(form) {
+    this.submittedAnonymous = true;
+    
+    if (form.$valid) {
+      this.Auth.createAnonymousUser({'g-recaptcha-response': this.captchaResponse})
+      .then(() => {
+        this.$state.go('main');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+  }
+  showSignUpStrong(){
+      this.SignUpIsHidden = !this.SignUpIsHidden;
   }
 }
 

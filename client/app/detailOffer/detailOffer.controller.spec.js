@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Component: CreateComponent', function () {
+describe('Component: DetailOfferComponent', function () {
 
   // load the controller's module
   beforeEach(module('geomarketApp'));
 
-  var CreateComponent, scope;
+  var DetailOfferComponent, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($componentController, $rootScope) {
     scope = $rootScope.$new();
-    CreateComponent = $componentController('CreateComponent', {
+    DetailOfferComponent = $componentController('DetailOfferComponent', {
       $scope: scope
     });
   }));

@@ -57,6 +57,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
+    console.log(err);
     res.status(statusCode).send(swagger.apiError(err.toString()));
   };
 }
@@ -65,8 +66,8 @@ function checkCreator(req, res) {
   return function(entity) {
     if (entity) {
       if (!req.user._id.equals(entity._creator)) {
-        res.status(401).send(swagger.apiError("Only creator can edit this."));
-        return null
+        res.status(403).send(swagger.apiError("Only creator can edit this."));
+        return null;
       }
       return entity;
     }
@@ -75,18 +76,30 @@ function checkCreator(req, res) {
 
 function attachComment(req, res) {
   return function(offer) {
-    req.body._creator = req.user._id;
-    offer.comments.push(req.body);
-    offer.save()
-      .then((updated) => {
-        return updated;
-      });
+    if (offer) {
+      if (!req.body.text) { 
+        res.status(400).send(swagger.apiError("Need to provide a text.")); 
+        return null; 
+      }
+      req.body._creator = req.user._id;
+      delete req.body.date;
+      offer.comments.push(req.body);
+      return offer.save();
+    }
+  }
+}
+
+function increaseViews() {
+  return function(offer) {
+    offer.views++;
+    return offer.save();
   }
 }
 
 swagger.noteEndpoint('/api/offers', swaggerdoc.query, "Offer");
 // Gets a list of Offers
 export function index(req, res) {
+  if (!req.query.longitude || !req.query.latitude) { return res.status(400).send(swagger.apiError("Need to provide longitude and latitude.")); }
   // max offers to search
   // var limit = req.query.limit || 10;
   // max radius for search
@@ -99,19 +112,23 @@ export function index(req, res) {
   coords[1] = req.query.latitude;
   
   return Offer.find({
-    // search for near offers
-    loc: {
-          $near: coords,
-          $maxDistance: maxDistance
+      // search for near offers
+      loc: {
+            $near: coords,
+            $maxDistance: maxDistance
+      },
+      // start date should be in the past
+      startDate: {
+        $lte: Date.now()
+      },
+      // end date should be in the future
+      endDate: {
+        $gte: Date.now()
+      },
+      status: 'open',
+      active: true
     },
-    // start date should be in the past
-    startDate: {
-      $lte: Date.now()
-    },
-    // end date should be in the future
-    endDate: {
-      $gte: Date.now()
-    }})
+    '-comments')
     //.limit(limit)
     .exec()
     .then(respondWithResult(res))
@@ -121,7 +138,19 @@ export function index(req, res) {
 swagger.noteEndpoint('/api/offers/my', swaggerdoc.my, "Offer");
 // Get all Offers of the request-user from the DB
 export function my(req, res) {
-  return Offer.find({ _creator: req.user._id })
+  var options = {
+    _creator: req.user._id,
+    active: true
+  }
+  console.log(req.user);
+  if (req.user.role === 'anonymous') {
+    options.status = 'open',
+    options.endDate = {
+      $gte: Date.now()
+    }
+  }
+  console.log(options);
+  return Offer.find(options)
     .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -133,6 +162,7 @@ export function show(req, res) {
   return Offer.findById(req.params.id)
     .exec()
     .then(handleEntityNotFound(res))
+    .then(increaseViews())
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -175,7 +205,8 @@ swagger.noteEndpoint('/api/offers/{id}/comment', swaggerdoc.addComment, "Offer")
 export function addComment(req, res) {
   // Attach user id to comment
   req.body._creator = req.user._id;
-  return Offer.findById(req.params.id).exec()
+  return Offer.findById(req.params.id)
+    .exec()
     .then(handleEntityNotFound(res))
     .then(attachComment(req, res))
     .then(respondWithResult(res))

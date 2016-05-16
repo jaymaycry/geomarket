@@ -95,7 +95,7 @@ module.exports = {
       operationId: 'create',
       parameters: [
         {
-          name: 'offer',
+          name: 'user',
           in: 'body',
           required: true,
           type: "object",
@@ -192,7 +192,7 @@ module.exports = {
   },
   destroy: {
     'delete': {
-      summary: 'Returns an Offer.',
+      summary: 'Deletes a User.',
       description: '',
       operationId: 'destroy',
       parameters: [
@@ -219,7 +219,7 @@ module.exports = {
       parameters: [],
       responses: {
         "200": {
-          "description": "Offer instance.",
+          "description": "User instance.",
           "schema": {
             "type": "object",
             "properties": {
@@ -245,7 +245,7 @@ module.exports = {
           }
         },
         "401": swagger.errorResponse("Not logged in."),
-        "404": swagger.errorResponse("Offer not found."),
+        "404": swagger.errorResponse("User not found."),
         "500": swagger.errorResponse("Error")
       }
     }

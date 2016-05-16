@@ -319,6 +319,15 @@ gulp.task('start:server', () => {
         .on('log', onServerLog);
 });
 
+gulp.task('debug:server', () => {
+//  debug = true;
+  process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+  config = require(`./${serverPath}/config/environment`);
+  nodemon(`-w ${serverPath} ${serverPath}`)
+    .on('log', onServerLog);
+});
+
+
 gulp.task('watch', () => {
     var testFiles = _.union(paths.client.test, paths.server.test.unit, paths.server.test.integration);
 
@@ -458,7 +467,7 @@ gulp.task('build', cb => {
         cb);
 });
 
-gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**`], {dot: true}));
+gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile|uploads)**`], {dot: true}));
 
 gulp.task('build:client', ['transpile:client', 'styles', 'html', 'constant'], () => {
     var manifest = gulp.src(`${paths.dist}/${clientPath}/assets/rev-manifest.json`);

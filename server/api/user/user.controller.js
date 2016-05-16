@@ -39,15 +39,18 @@ export function index(req, res) {
  */
 swagger.noteEndpoint('/api/users', swaggerdoc.create, "User");
 export function create(req, res, next) {
+  // delete captcha response
+  delete req.body['g-recaptcha-response'];
+  
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
-  newUser.save()
+  return newUser.save()
     .then(function(user) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token });
+      return res.json({ token });
     })
     .catch(validationError(res));
 }
@@ -67,7 +70,7 @@ export function createAnonymous(req, res, next) {
     return s;
   }
 
-  var username = 'user' + randString(5);
+  var username = 'Anonymous' + randString(5);
   var password = randString(8);
 
   var newUser = new User({
@@ -78,12 +81,12 @@ export function createAnonymous(req, res, next) {
     password: password
   });
 
-  newUser.save()
+  return newUser.save()
     .then(function(user) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token });
+      return res.json({ token });
     })
     .catch(validationError(res));
 }
@@ -100,7 +103,7 @@ export function show(req, res, next) {
       if (!user) {
         return res.status(404).send(swagger.apiError("User not found."));
       }
-      res.json(user.profile);
+      return res.json(user.profile);
     })
     .catch(handleError(res));
 }
@@ -113,7 +116,7 @@ swagger.noteEndpoint('/api/users/{id}', swaggerdoc.destroy, "User");
 export function destroy(req, res) {
   return User.findByIdAndRemove(req.params.id).exec()
     .then(function() {
-      res.status(204).send(swagger.apiMessage("User deleted."));
+      return res.status(204).send(swagger.apiMessage("User deleted."));
     })
     .catch(handleError(res));
 }
@@ -131,9 +134,9 @@ export function changePassword(req, res, next) {
     .then(user => {
       if (user.authenticate(oldPass)) {
         user.password = newPass;
-        return user.save()
+        user.save()
           .then(() => {
-            res.status(204).send(swagger.apiMessage("Password changed."));
+            return res.status(204).send(swagger.apiMessage("Password changed."));
           })
           .catch(validationError(res));
       } else {
@@ -149,12 +152,12 @@ swagger.noteEndpoint('/api/users/me', swaggerdoc.me, "User");
 export function me(req, res, next) {
   var userId = req.user._id;
 
-  return User.findOne({ _id: userId }, '-salt -password').exec()
+    return User.findOne({ _id: userId }, '-salt -password').exec()
     .then(user => { // don't ever give out the password or salt
       if (!user) {
         return res.status(401).send(swagger.apiError("Not logged in."));
       }
-      res.status(200).json(user);
+      return res.status(200).json(user);
     })
     .catch(err => next(err));
 }

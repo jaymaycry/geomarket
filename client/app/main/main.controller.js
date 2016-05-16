@@ -4,43 +4,46 @@
 
     class MainController {
         
-        constructor($http,Upload,$geolocation,Offer,$state) {
-            this.$http = $http;
+        constructor(Offer, Upload, Auth, $geolocation, $state) {
             this.Upload = Upload;
             this.position;
             this.$geolocation = $geolocation;
             this.$state=$state;
             this.Offer = Offer;
             this.offers = [];
-            this.options={};
+            this.options = {};
             this.userMap;
             this.marker;
-            //this.awesomeThings = [];
+            this.isLoggedIn = Auth.isLoggedIn;
+            this.position;
+            this.showSpinner = true;
+            this.showInfo = false;
         }
 
         $onInit() {
-            /*this.$http.get('/api/things').then(response => {
-              this.awesomeThings = response.data;
-              });*/
             this.$geolocation.getCurrentPosition({
-                timeout: 60000
+                timeout: 6000
                     
             }).then(position => {
+                this.showSpinner = false;
+                this.position = position;
                 this.options.zoom = 13;
-                this.options.center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                this.options.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
-
+            })
+            .catch(() => {
+                this.showSpinner = false;
+                this.showInfo = true;
             });
 
         }
 
         uploadPicture(file){
-            if(file){
+            if(file && this.isLoggedIn()){
                 this.$state.go("createOffering",{obj: file});
             }
-        
         
         }
         
@@ -49,15 +52,9 @@
 					map: this.userMap,
 					animation: google.maps.Animation.DROP,
 					position: new google.maps.LatLng(offer.loc[1],offer.loc[0]),
-                    visible: true
+                    visible: true,
+                    icon: '/assets/icons/icon.png'
 				});
-				
-
-            //marker.setMap(this.userMap);
-        }
-
-        showDetailView(offer){
-            console.log(offer);  
         }
     }
 
