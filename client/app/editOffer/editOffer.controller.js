@@ -50,9 +50,9 @@
             this.options.zoom = 13;
             this.options.center = new google.maps.LatLng(offer.loc[1], offer.loc[0]);
             this.options.mapTypeId = google.maps.MapTypeId.ROADMAP;
-            this.userMap = new google.maps.Map(this.map, this.options);
+            this.offerMap = new google.maps.Map(map, this.options);
             var marker = new google.maps.Marker({
-                map: this.userMap,
+                map: this.offerMap,
                 animation: google.maps.Animation.DROP,
                 position: new google.maps.LatLng(offer.loc[1], offer.loc[0]),
                 visible: true,
