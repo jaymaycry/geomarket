@@ -7,7 +7,7 @@
          * @param {object} $state - The $state service.
          * @param {object} $stateParams - Contains information about the url.
          * @param {Offer} Offer - The offer service.
-         * @param {Auth) Auth - The authentication service.
+         * @param {Auth} Auth - The authentication service.
          * @param {Upload} Upload - The service to Upload files.
          * @param {$geolocation} $geolocation - The service to get the geolocation.
          */
@@ -44,7 +44,7 @@
 
         /**
          * @description Loads the map with the offers geolocation.
-         * @param (object) The current offer.
+         * @param {object} The current offer.
          */
         loadMap(offer) {
             this.options.zoom = 13;
@@ -94,7 +94,7 @@
 
         /**
         * @description Uploads the file to the database.
-        * @param (file) File to be uploaded.
+        * @param {file} File to be uploaded.
         */
         upload(file) {
             return this.Upload.upload({
@@ -105,7 +105,7 @@
 
         /**
         * @description Check if file is a picture.
-        * @param (file) File to be uploaded.
+        * @param {file} File to be uploaded.
         */
         uploadPicture(file) {
             if (file) {
@@ -115,7 +115,7 @@
 
         /**
         * @description Check if the offer datas are valid.
-        * @param (object) The offer object.
+        * @param {object} The offer object.
         */
         controlOffering(offer) {
             var message = " ";
