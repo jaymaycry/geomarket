@@ -1,8 +1,8 @@
-<div class="container">
+<div ng-show="$ctrl.position" class="container">
     <div class="row">
         <div class="col-xs-12">
             <img id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.file" />
-            <button type="button" class="btn btn-inverse btn-default btn-lg btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera">
+            <button type="button" class="btn btn-default btn-lg btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera">
                 <span class="glyphicon glyphicon-camera"></span>
                 Take new picture
             </button>
@@ -15,6 +15,7 @@
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Title" ng-model="$ctrl.offer.name">
+                    <span ng-show="$ctrl.invalidName">Your offer needs a title.</span>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
@@ -23,14 +24,17 @@
                 <div class="form-group">
                     <label for="offeringOpenDate">Start date:</label>
                     <input type="date" class="form-control" id="startDate" ng-model="$ctrl.offer.startDate">
+                    <span ng-show="$ctrl.invalidStartDate">The start date must be today or greater.</span>
                 </div>
                 <div class="form-group">
                     <label for="offeringEndDate">End date:</label>
                     <input type="date" class="form-control" id="endDate" ng-model="$ctrl.offer.endDate">
+                    <span ng-show="$ctrl.invalidEndDate">The end date must be greater than the start date.</span>
                 </div>
                 <div class="form-group">
                     <label for="offeringPrice">Price</label>
                     <input type="number" class="form-control" id="offeringPrice" step="0.05" placeholder="0.00" ng-model="$ctrl.offer.price">
+                    <span ng-show="$ctrl.invalidPrice">The price must be a positive number.</span>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-md-2">
@@ -44,4 +48,9 @@
         </div>
     </div>
 </div>
-
+<div ng-show="!$ctrl.position" class="container">
+    <div class="jumbotron">
+    <h1>Hello User!</h1>
+    <p>To use our services, please activate the <b>location sharing</b> in your browsers settings.</p>
+    </div>
+</div>

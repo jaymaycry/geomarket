@@ -34,7 +34,10 @@ var OfferSchema = new mongoose.Schema({
     enum: ['open', 'selled'], 
     default: 'open'
   },
-  active: Boolean
+  active: {
+    type: Boolean,
+    default: true  
+  }
 },{
   timestamps: true
 });

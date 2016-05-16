@@ -11,11 +11,13 @@
             this.$state=$state;
             this.Offer = Offer;
             this.offers = [];
-            this.options={};
+            this.options = {};
             this.userMap;
             this.marker;
             this.isLoggedIn = Auth.isLoggedIn;
             this.position;
+            this.showSpinner = true;
+            this.showInfo = false;
         }
 
         $onInit() {
@@ -23,6 +25,7 @@
                 timeout: 6000
                     
             }).then(position => {
+                this.showSpinner = false;
                 this.position = position;
                 this.options.zoom = 13;
                 this.options.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -30,6 +33,10 @@
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
 
+            })
+            .catch(() => {
+                this.showSpinner = false;
+                this.showInfo = true;
             });
 
         }

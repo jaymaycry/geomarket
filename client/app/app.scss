@@ -4,6 +4,12 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 @import '../bower_components/font-awesome/scss/font-awesome';
 
 /**
+* Global variables
+*/
+$gm-color-blue: #00a6ff;
+$gm-color-blue2: #0091DE;
+
+/**
  * App-wide Styles
  */
 
@@ -13,6 +19,20 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   color: #000;
   padding: 0.2em 0;
 }
+
+#logo {
+    height:25px;
+}
+
+.btn-primary {
+    background-color: $gm-color-blue;
+    border-color: $gm-color-blue2;
+    &:hover {
+        background-color: $gm-color-blue2;
+    }
+}
+
+
 
 // Component styles are injected through grunt
 /* inject:scss */
@@ -33,10 +53,39 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
 .btn-lg, .btn-group-lg > .btn {
     font-size: 14px;
-
 }
 
 .img-thumbnail {
 
     margin-bottom: 15px;
+}
+
+#btn-login, #btn-camera-upload {
+   margin:0px;
+}
+
+h1, .jumbotron > h1 {
+    color: $gm-color-blue;
+    font-size: 36px;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+.bs-callout-info {
+    border-left-color: $gm-color-blue;
+}
+
+.bs-callout-info h4 {
+    color: $gm-color-blue;
+}
+
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
 }
