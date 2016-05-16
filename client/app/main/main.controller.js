@@ -4,7 +4,7 @@
 
     class MainController {
        /**
-        * @description Constructor of the Mainconroller
+        * @description Constructor of the Maincontroller
         * @constructor
         * @param {Upload} Upload - Service to upload
         * @param {Offer} Offer - Service to get offerings
