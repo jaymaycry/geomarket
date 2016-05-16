@@ -3,9 +3,15 @@
 (function() {
 
     class MainController {
-        
-        constructor(Offer, Upload, Auth, $geolocation, $state) {
-            this.Upload = Upload;
+       /**
+        * @description Constructor of the Mainconroller
+        * @constructor
+        * @param {Upload} Upload - Service to upload
+        * @param {Offer} Offer - Service to get offerings
+        * @param {$geolocation} $geolocation - The service to get location
+        * @param {$state} $state - State service.
+        */
+        constructor(Offer, Auth, $geolocation, $state) {
             this.position;
             this.$geolocation = $geolocation;
             this.$state=$state;
@@ -19,7 +25,9 @@
             this.showSpinner = true;
             this.showInfo = false;
         }
-
+        /**
+         *@description initialisation method
+         */
         $onInit() {
             this.$geolocation.getCurrentPosition({
                 timeout: 6000
@@ -40,14 +48,20 @@
             });
 
         }
-
+        /**
+         * @description Method to redirect a file to the createOffering controller
+         * @param {file} file -a file in this case a picture.
+         */
         uploadPicture(file){
             if(file && this.isLoggedIn()){
                 this.$state.go("createOffering",{obj: file});
             }
         
         }
-        
+        /**
+         * @description Method to set a google marker for the Offer
+         * @param {offer} Offer object to set the marker.
+         */
         setMarker(offer){
 				var marker = new google.maps.Marker({
 					map: this.userMap,
