@@ -88,7 +88,6 @@
 
         }
 
-
         /**
         * @description Check if the offer datas are valid.
         * @param (object) The offer object.

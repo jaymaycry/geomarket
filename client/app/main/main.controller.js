@@ -40,7 +40,6 @@
                 this.options.mapTypeId= google.maps.MapTypeId.ROADMAP;
                 this.userMap = new google.maps.Map(map,this.options);
                 this.offers = this.Offer.query({longitude:position.coords.longitude,latitude:position.coords.latitude});
-
             })
             .catch(() => {
                 this.showSpinner = false;
@@ -71,7 +70,6 @@
                     icon: '/assets/icons/icon.png'
 				});
         }
-        
     }
 
     angular.module('geomarketApp')

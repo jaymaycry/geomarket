@@ -7,6 +7,9 @@
 //import Thing from '../api/thing/thing.model';
 import Offer from '../api/offer/offer.model';
 import User from '../api/user/user.model';
+import mongoose from 'mongoose';
+var Grid = require('gridfs-stream');
+var fs = require("fs");
 
 var creatorId = "";
 
@@ -27,7 +30,7 @@ User.find({}).remove()
     .then((user) => {
       console.log('finished populating users');
       creatorId = user._id;
-      
+
       Offer.find({}).remove()
         .then(() => {
           Offer.create({
@@ -64,7 +67,7 @@ User.find({}).remove()
               8.7043081,
               47.2074848
             ],
-            
+
             price: 100,
             viewCounter: 0,
             comments:[ {
@@ -79,3 +82,12 @@ User.find({}).remove()
         });
     });
   });
+
+//var conn = mongoose.connection;
+Grid.mongo = mongoose.mongo;
+
+var gfs = new Grid(mongoose.connection, mongoose.mongo);
+var writestream = gfs.createWriteStream({filename: 'example.jpg'});
+fs.createReadStream('server/api/upload/fixtures/example.jpg').pipe(writestream);
+writestream.on('close', function (file) {console.log(file.filename + 'Written To DB');});
+
