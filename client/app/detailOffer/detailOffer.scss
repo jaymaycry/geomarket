@@ -1,0 +1,31 @@
+.panel.panel-default {
+    display: inline-block;
+    width:100%;
+}
+
+.time-column {
+  max-width:50px;
+}
+
+#map{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-top: 0;
+}
+
+.btn.btn-lg {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.comment-creator {
+    background-color: #FFFAD7;
+}
+.comment-self {
+    background-color: #E9F7FF;
+}

@@ -28,13 +28,14 @@ export function isAuthenticated() {
     })
     // Attach user to request
     .use(function(req, res, next) {
-      User.findById(req.user._id).exec()
+      User.findById(req.user._id)
+        .exec()
         .then(user => {
           if (!user) {
             return res.status(401).send(swagger.apiError("Not authenticated."));
           }
           req.user = user;
-          return next();
+          next();
         })
         .catch(err => next(err));
     });

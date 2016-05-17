@@ -126,14 +126,14 @@ describe('User API:', function() {
   
   describe('POST /api/users/anonymous', function() {
     
-    it('should respond with an anonymous user token', function(done) {
+    it('should respond with 404 when captcha isnt provided', function(done) {
       request(app)
       .post('/api/users/anonymous')
       .send({})
-      .expect(200)
+      .expect(400)
       .expect('Content-Type', /json/)
       .end((err, res) => {
-        expect(res.body.token).to.be.ok;
+        if (err) {done(err);}
         done();
       });
     });

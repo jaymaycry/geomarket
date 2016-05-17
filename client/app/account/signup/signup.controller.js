@@ -1,20 +1,30 @@
 'use strict';
 
 class SignupController {
+/**
+ * @description Controuctor of the SignupController
+ * @constructor
+ * @param {Auth} Auth -The authentication service
+ * @param {$state} $state -The sate service
+ */
   //start-non-standard
   user = {};
   errors = {};
   submitted = false;
   submittedAnonymous = false;
   captchaResponse = null;
+  SignUpIsHidden = false;
   
   //end-non-standard
-
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+    
   }
-
+  /**
+   * @description Method to register an user 
+   * @param {object} form -the form object from the input form
+   */
   register(form) {
     this.submitted = true;
 
@@ -41,7 +51,10 @@ class SignupController {
       });
     }
   }
-  
+  /**
+   *@description Method to register an user anonymously
+   @param{form} form -the form object of the anonymously input form
+  */
   registerAnonymous(form) {
     this.submittedAnonymous = true;
     
@@ -54,6 +67,9 @@ class SignupController {
         console.log(err);
       });
     }
+  }
+  showSignUpStrong(){
+      this.SignUpIsHidden = !this.SignUpIsHidden;
   }
 }
 

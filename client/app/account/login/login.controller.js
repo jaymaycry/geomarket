@@ -1,6 +1,12 @@
 'use strict';
 
 class LoginController {
+    /**
+     * @description Constructor for LoginController
+     * @constructor
+     * @param {Auth} Auth -Object form the authorisation service
+     * @param {$state} $state -The state object 
+     */
   constructor(Auth, $state) {
     this.user = {};
     this.errors = {};
@@ -10,6 +16,10 @@ class LoginController {
     this.$state = $state;
   }
 
+  /**
+   * @description method to log into geomarket
+   * @param {object} form - the object from the input form
+   */
   login(form) {
     this.submitted = true;
 

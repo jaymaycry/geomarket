@@ -536,8 +536,8 @@ my: {
     }
   },
   delete: {
-    'delete': {
-      summary: 'Returns an Offer.',
+    '': {
+      summary: 'Deletes an Offer.',
       description: '',
       operationId: 'delete',
       parameters: [

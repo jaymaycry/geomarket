@@ -18,11 +18,14 @@ var OfferSchema = new mongoose.Schema({
     var date = new Date(Date.now());
     return date.setHours(date.getHours() + 12);
   }},
-  viewCounter: { type: Number, default: 0 },
+  views: { type: Number, default: 0 },
   comments: [
     {
       _creator:  { type: mongoose.Schema.ObjectId, ref: 'User' },
-      date: Date,
+      date: { 
+        type:Date,
+        default: Date.now
+      },
       text: String
     }
   ],
@@ -31,7 +34,10 @@ var OfferSchema = new mongoose.Schema({
     enum: ['open', 'selled'], 
     default: 'open'
   },
-  active: Boolean
+  active: {
+    type: Boolean,
+    default: true  
+  }
 },{
   timestamps: true
 });

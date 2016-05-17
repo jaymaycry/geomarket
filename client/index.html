@@ -7,10 +7,41 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <base href="/">
-    <title></title>
+    <title>geoMarket</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--IOS and Androi web clips-->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <link rel="icon" type="image/gif" href="/assets/icons/favicon.gif">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-128x128.png" sizes="128x128">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-180x180.png" sizes="180x180">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-precomposed.png">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon-196x196.png" sizes="196x196">
+    <meta name="msapplication-TileImage" content="/assets/icons/win8-tile-144x144.png"> 
+    <meta name="msapplication-TileColor" content="#ffffff"> 
+    <meta name="msapplication-navbutton-color" content="#ffffff"> 
+    <meta name="msapplication-square70x70logo" content="/assets/icons/win8-tile-70x70.png"> 
+    <meta name="msapplication-square144x144logo" content="/assets/icons/win8-tile-144x144.png"> 
+    <meta name="msapplication-square150x150logo" content="/assets/icons/win8-tile-150x150.png"> 
+    <meta name="msapplication-wide310x150logo" content="/assets/icons/win8-tile-310x150.png"> 
+    <meta name="msapplication-square310x310logo" content="/assets/icons/win8-tile-310x310.png"> 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
@@ -49,20 +80,24 @@
     <![endif]-->
     <!-- build:js({client,node_modules}) app/vendor.js -->
       <!-- bower:js -->
-      <script src="bower_components/jquery/dist/jquery.js"></script>
-      <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/angular-resource/angular-resource.js"></script>
-      <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-      <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-      <script src="bower_components/lodash/lodash.js"></script>
-      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
-      <script src="bower_components/ngGeolocation/ngGeolocation.js"></script>
-      <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
-      <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
-      <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
-      <script src="bower_components/angular-recaptcha/release/angular-recaptcha.js"></script>
+      <script src='bower_components/jquery/dist/jquery.js'></script>
+      <script src='bower_components/angular/angular.js'></script>
+      <script src='bower_components/angular-resource/angular-resource.js'></script>
+      <script src='bower_components/angular-cookies/angular-cookies.js'></script>
+      <script src='bower_components/angular-sanitize/angular-sanitize.js'></script>
+      <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+      <script src='bower_components/lodash/lodash.js'></script>
+      <script src='bower_components/angular-ui-router/release/angular-ui-router.js'></script>
+      <script src='bower_components/angular-validation-match/dist/angular-validation-match.min.js'></script>
+      <script src='bower_components/ngGeolocation/ngGeolocation.js'></script>
+      <script src='bower_components/ng-file-upload/ng-file-upload.js'></script>
+      <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
+      <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
+      <script src='bower_components/angular-recaptcha/release/angular-recaptcha.js'></script>
+      <script src='bower_components/moment/moment.js'></script>
+      <script src='bower_components/angular-moment/angular-moment.js'></script>
+      <script src='bower_components/spin.js/spin.js'></script>
+      <script src='bower_components/angular-spinner/angular-spinner.js'></script>
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js(.tmp) app/app.js -->
@@ -80,12 +115,16 @@
       <script src="app/app.constant.js"></script>
       <script src="app/createOffering/createOffering.controller.js"></script>
       <script src="app/createOffering/createOffering.js"></script>
+      <script src="app/detailOffer/deleteOffer/deleteOffer.controller.js"></script>
+      <script src="app/detailOffer/detailOffer.controller.js"></script>
+      <script src="app/detailOffer/detailOffer.js"></script>
+      <script src="app/detailOffer/sellOffer/sellOffer.controller.js"></script>
+      <script src="app/editOffer/editOffer.controller.js"></script>
+      <script src="app/editOffer/editOffer.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
-      <script src="app/offer/create/create.controller.js"></script>
-      <script src="app/offer/create/create.js"></script>
-      <script src="app/offer/offer.controller.js"></script>
-      <script src="app/offer/offer.js"></script>
+      <script src="app/myOffers/myOffers.controller.js"></script>
+      <script src="app/myOffers/myOffers.js"></script>
       <script src="app/offer/offer.service.js"></script>
       <script src="components/auth/auth.service.js"></script>
       <script src="components/auth/interceptor.service.js"></script>
@@ -99,5 +138,6 @@
       <script src="components/util/util.service.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
+    <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyCZHLa-O44Z6vlGd0STzXp_harNZji1McM'></script>
   </body>
 </html>
