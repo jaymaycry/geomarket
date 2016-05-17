@@ -1,0 +1,83 @@
+<div class="container">
+    <div ng-show="!$ctrl.active" class="row">
+        <div class="col-xs-12">
+            <h3>This offer does not exist.</h3>
+
+        </div>
+    </div>
+    <div ng-show="$ctrl.active" class="row">
+
+        <div class="col-xs-12 col-sm-4">
+            <!-- ng-show="$ctrl.getCurrentUser._id === $ctrl.offer._creator" -->
+            <img ng-src="{{$ctrl.offer.picture}}" alt="{{$ctrl.offer.name}}" title="{{$ctrl.offer.name}}" class="img-responsive img-thumbnail" />
+        </div>
+        <div class="col-xs-12 col-sm-8">
+
+            <h4>{{$ctrl.offer.name}}</h4>
+            <p>{{$ctrl.offer.description}}</p>
+            <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Ends <span am-time-ago="$ctrl.offer.endDate"></span></p>
+            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Views: {{$ctrl.offer.views}}</p>
+            <p><b>Price:</b> {{$ctrl.offer.price | currency : 'CHF ' : 2}}</p>
+
+            <div class="col-xs-12 map" id="map" ng-model="$ctrl.map"></div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>{{$ctrl.offer.comments.length}} Comments:</b></div>
+
+                <table class="table">
+                    <tr ng-repeat="comment in $ctrl.offer.comments" ng-class="$ctrl.commentClass(comment._creator)">
+                        <td class="time-column"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span am-time-ago="comment.date"></span></td>
+                        <td>{{comment.text}}</td>
+                    </tr>
+                </table>
+
+                <div class="panel-footer">
+                    <div ng-show="$ctrl.offer.status !=='selled' && $ctrl.offer.active && $ctrl.isLoggedIn()" class="input-group">
+                        <input type="text" class="form-control" placeholder="Your comment..." ng-model="$ctrl.comment">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" ng-click="$ctrl.addComment()">Submit</button>
+                        </span>
+                    </div>
+                    <span ng-show="$ctrl.offer.status !=='selled' && $ctrl.offer.active && !$ctrl.isLoggedIn()"><a ui-sref="signup" href="/signup">Sign up</a> to comment here.</span>
+                    <span ng-show="$ctrl.offer.status === 'selled' || !$ctrl.offer.active">Offer closed.</span>
+                </div>
+            </div>
+
+            <button ng-show="$ctrl.offer.status !=='selled' && $ctrl.getCurrentUser()._id === $ctrl.offer._creator" type="button" class="btn btn-default btn-lg btn-block btn-success" ng-click="$ctrl.openSellOffer()"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
+            <button ng-show="$ctrl.offer.status !=='selled' && $ctrl.getCurrentUser()._id === $ctrl.offer._creator" ui-sref="editOffer({id: $ctrl.offer._id})" type="button" class="btn btn-default btn-lg btn-block btn-warning"><span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span> Edit offer</button>
+            <button ng-show="$ctrl.offer.status !=='selled' && $ctrl.getCurrentUser()._id === $ctrl.offer._creator" ng-click="$ctrl.openDeleteOffer()" type="button" class="btn btn-default btn-lg btn-block btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
+
+            <script type="text/ng-template" ng-show="$ctrl.getCurrentUser()._id === $ctrl.offer._creator" id="deleteOffer.html">
+                <div class="modal-header">
+                    <h3 class="modal-title">Delete offer</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure, you want to delete this offer?</p>
+                </div>
+                <div class="modal-footer">
+                    <button ng-show="$ctrl.offer.status !=='selled' && $ctrl.getCurrentUser()._id === $ctrl.offer._creator" ng-click="ok()" type="button" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Delete offer</button>
+                    <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+                </div>
+            </script>
+
+            <script type="text/ng-template" ng-show="$ctrl.offer.status !=='selled' && $ctrl.getCurrentUser()._id === $ctrl.offer._creator" id="sellOffer.html">
+                <div class="modal-header">
+                    <h3 class="modal-title">Sell offer</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure, you want to sell this offer?</p>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="ok()" type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Sell offer</button>
+                    <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+                </div>
+            </script>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-primary btn-lg" ng-click="$ctrl.quit()">Back to overview</button>
+        </div>
+    </div>
+</div>

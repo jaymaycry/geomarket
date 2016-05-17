@@ -43,9 +43,8 @@ describe('Offer API:', function() {
   });
   
   describe('GET /api/offers when latitude and longitude parameters are set', function() {
-    var offers;
 
-    beforeEach(function(done) {
+    it('should respond with JSON array', function(done) {
       request(app)
         .get('/api/offers?longitude=8.5276642&latitude=47.3547855')
         .expect(200)
@@ -54,19 +53,29 @@ describe('Offer API:', function() {
           if (err) {
             return done(err);
           }
-          offers = res.body;
+          expect(res.body).to.be.instanceOf(Array);
           done();
         });
     });
-
-    it('should respond with JSON array', function() {
-      expect(offers).to.be.instanceOf(Array);
+    
+    it('should respond with 400 if no longitude or latitude was set', function(done) {
+      request(app)
+        .get('/api/offers')
+        .expect(400)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
   });
 
   describe('POST /api/offers', function() {
-    beforeEach(function(done) {
+
+    it('should respond with the newly created offer', function(done) {
       request(app)
         .post('/api/offers')
         .set('authorization', 'Bearer ' + token)
@@ -81,21 +90,36 @@ describe('Offer API:', function() {
             return done(err);
           }
           newOffer = res.body;
+          expect(newOffer.name).to.equal('New Offer');
+          expect(newOffer.description).to.equal('This is the brand new offer!!!');
           done();
         });
-    });
 
-    it('should respond with the newly created offer', function() {
-      expect(newOffer.name).to.equal('New Offer');
-      expect(newOffer.description).to.equal('This is the brand new offer!!!');
+    });
+    
+    
+    it('should respond with 401 if not authorized', function(done) {
+      request(app)
+        .post('/api/offers')
+        .send({
+          name: 'New Offer 2',
+          description: 'This is the second brand new offer!!!'
+        })
+        .expect(401)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+
     });
 
   });
 
   describe('GET /api/offers/:id', function() {
-    var offer;
 
-    beforeEach(function(done) {
+    it('should respond with the requested offer', function(done) {
       request(app)
         .get('/api/offers/' + newOffer._id)
         .expect(200)
@@ -104,26 +128,45 @@ describe('Offer API:', function() {
           if (err) {
             return done(err);
           }
-          offer = res.body;
+          expect(res.body.name).to.equal('New Offer');
+          expect(res.body.description).to.equal('This is the brand new offer!!!');
           done();
         });
     });
-
-    afterEach(function() {
-      offer = {};
+    
+    it('should respond 404 when provided a wrong offer id', function(done) {
+      request(app)
+        .get('/api/offers/ffffffffffffffffffffffff')
+        .expect(404)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
-
-    it('should respond with the requested offer', function() {
-      expect(offer.name).to.equal('New Offer');
-      expect(offer.description).to.equal('This is the brand new offer!!!');
+    
+    it('should respond 500 when provided an incorrect id length', function(done) {
+      request(app)
+        .get('/api/offers/gagabubu')
+        .expect(500)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
   });
   
   
   describe('PUT /api/offers/:id/comment', function() {
-    
-    it('should respond with the updated offer containing the comment', function() {
+    this.timeout(10000);
+  
+    it('should respond with the updated offer containing the comment', function(done) {
       request(app)
         .put('/api/offers/' + newOffer._id + '/comment')
         .set('authorization', 'Bearer ' + token)
@@ -138,12 +181,73 @@ describe('Offer API:', function() {
           done();
         });
     });
+
+    it('should respond with 400 when body has no text.', function(done) {
+      request(app)
+        .put('/api/offers/' + newOffer._id + '/comment')
+        .set('authorization', 'Bearer ' + token)
+        .send({})
+        .expect(400)
+        .end((err, res) =>  {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+    
+    it('should respond with 401 when not authorized.', function(done) {
+      request(app)
+        .put('/api/offers/' + newOffer._id + '/comment')
+        .send({
+          text: "This is the second comment!"
+        })
+        .expect(401)
+        .end((err, res) =>  {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+
+    it('should respond with 404 when the offer was not found.', function(done) {
+      request(app)
+        .put('/api/offers/ffffffffffffffffffffffff/comment')
+        .set('authorization', 'Bearer ' + token)
+        .send({
+          text: "This is the first comment!"
+        })
+        .expect(404)
+        .end((err, res) =>  {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+   
+    it('should respond with 500 when id length is wrong.', function(done) {
+      request(app)
+        .put('/api/offers/gagabubu/comment')
+        .set('authorization', 'Bearer ' + token)
+        .send({
+          text: "This is the first comment!"
+        })
+        .expect(500)
+        .end((err, res) =>  {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+
   });
   
   describe('GET /api/offers/my', function() {
-    var offers;
 
-    beforeEach(function(done) {
+    it('should respond with JSON array', function(done) {
       request(app)
         .get('/api/offers/my')
         .set('authorization', 'Bearer ' + token)
@@ -153,14 +257,23 @@ describe('Offer API:', function() {
           if (err) {
             return done(err);
           }
-          offers = res.body;
+          expect(res.body).to.be.instanceOf(Array);
           done();
         });
     });
-
-    it('should respond with JSON array', function() {
-      expect(offers).to.be.instanceOf(Array);
+    
+    it('should respond with 401 if not authorized', function(done) {
+      request(app)
+        .get('/api/offers/my')
+        .expect(401)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
+    
   });
 
   describe('DELETE /api/offers/:id', function() {

@@ -17,6 +17,12 @@ function UserResource($resource) {
       params: {
         id: 'me'
       }
+    },
+    createAnonymous: {
+      method: 'POST',
+      params: {
+        controller: 'anonymous'
+      }
     }
   });
 }

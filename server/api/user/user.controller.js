@@ -39,6 +39,9 @@ export function index(req, res) {
  */
 swagger.noteEndpoint('/api/users', swaggerdoc.create, "User");
 export function create(req, res, next) {
+  // delete captcha response
+  delete req.body['g-recaptcha-response'];
+  
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
@@ -55,7 +58,7 @@ export function create(req, res, next) {
 /**
  * Creates a new anonymous user
  */
-swagger.noteEndpoint('/api/users/anonymous', swaggerdoc.show, "User");
+swagger.noteEndpoint('/api/users/anonymous', swaggerdoc.createAnonymous, "User");
 export function createAnonymous(req, res, next) {
 
   function randString(x){
@@ -67,7 +70,7 @@ export function createAnonymous(req, res, next) {
     return s;
   }
 
-  var username = 'user' + randString(5);
+  var username = 'Anonymous' + randString(5);
   var password = randString(8);
 
   var newUser = new User({
