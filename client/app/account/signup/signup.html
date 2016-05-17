@@ -1,5 +1,29 @@
 <div class="container">
   <div class="row">
+    <!-- Anonymous signup -->
+    <div class="col-sm-12">
+      <h1>Sign up Anonymously</h1>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="formAnonymous" ng-submit="vm.registerAnonymous(formAnonymous)" novalidate>
+        <div class="form-group" ng-class="{ 'has-success': formAnonymous.captchaResponse.$valid && vm.submittedAnonymous,
+                                            'has-error': formAnonymous.captchaResponse.$invalid && vm.submittedAnonymous }">
+          <div vc-recaptcha name="captchaResponse" key="'6LcaMB8TAAAAAMp_v_Ou1Yx7cNpyKir6uISIvqUv'" ng-model="vm.captchaResponse" required></div>
+          <p class="help-block"
+             ng-show="formAnonymous.captchaResponse.$invalid && vm.submittedAnonymous">
+            Captcha must be set.
+          </p>
+        </div>
+        <div>
+          <button class="btn btn-inverse btn-lg btn-register" type="submit">
+            Sign up Anonymously
+          </button>
+        </div>
+      </form>
+    </div>
+        
+        
+    <!-- User signup -->
     <div class="col-sm-12">
       <h1>Sign up</h1>
     </div>
@@ -63,6 +87,15 @@
             Passwords must match.
           </p>
         </div>
+        
+        <div class="form-group" ng-class="{ 'has-success': form.captchaResponse.$valid && vm.submitted,
+                                            'has-error': form.captchaResponse.$invalid && vm.submitted }">
+          <div vc-recaptcha name="captchaResponse" key="'6LcaMB8TAAAAAMp_v_Ou1Yx7cNpyKir6uISIvqUv'" ng-model="vm.captchaResponse" required></div>
+          <p class="help-block"
+             ng-show="form.captchaResponse.$invalid && vm.submitted">
+            Captcha must be set.
+          </p>
+        </div>
 
         <div>
           <button class="btn btn-inverse btn-lg btn-register" type="submit">
@@ -78,3 +111,4 @@
   </div>
   <hr>
 </div>
+<script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script> 

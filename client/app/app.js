@@ -13,7 +13,8 @@ angular.module('geomarketApp', [
   'ui.router',
   'ui.bootstrap',
   'validation.match',
-  'uiGmapgoogle-maps'
+  'uiGmapgoogle-maps',
+  'vcRecaptcha'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

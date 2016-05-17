@@ -16,6 +16,7 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-jwt": "^3.0.0",
+    "express-recaptcha-rest": "^0.1.0",
     "express-session": "^1.11.3",
     "gridfs-storage-engine": "https://github.com/sebcom/gridfs-storage-engine.git",
     "gridfs-stream": "^1.1.1",
