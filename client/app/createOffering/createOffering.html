@@ -1,8 +1,9 @@
+<span us-spinner="{opacity: 0.25, color: '#00a6ff'}" spinner-on="$ctrl.showSpinner"></span>
 <div ng-show="$ctrl.position" class="container">
     <div class="row">
         <div class="col-xs-12">
-            <img id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-thumbnail="$ctrl.file" />
-            <button type="button" class="btn btn-default btn-lg btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera">
+            <img id="imgPreview" alt="uploadetImage" class="thumbnail" ngf-src="$ctrl.file" />
+            <button type="button" class="btn btn-default btn-lg btn-block" ngf-fix-orientation="true" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" ngf-fix-orientation="true" capture="camera">
                 <span class="glyphicon glyphicon-camera"></span>
                 Take new picture
             </button>
@@ -48,7 +49,7 @@
         </div>
     </div>
 </div>
-<div ng-show="!$ctrl.position" class="container">
+<div ng-show="$ctrl.showInfo" class="container">
     <div class="jumbotron">
     <h1>Hello User!</h1>
     <p>To use our services, please activate the <b>location sharing</b> in your browsers settings.</p>

@@ -1,6 +1,7 @@
+<span us-spinner="{opacity: 0.25, color: '#00a6ff'}" spinner-on="$ctrl.showSpinner"></span>
 <div class ="container" >
     <h4>My Offerings</h4>
-    <p>No offers published yet. Click on <b>Create offer</b> on the bottom to start a new offer.</p>
+    <p ng-show="$ctrl.showInfo">No offers published yet. Click on <b>Create offer</b> on the bottom to start a new offer.</p>
     <ul class="list-group">
         <li ng-repeat="offer in $ctrl.offers" class="ng-class: $ctrl.status(offer); list-group-item offerlist" ng-init="$ctrl.setMarker(offer)" >
             <a ng-href="/detailOffer/{{offer._id}}" ui-sref="detailOffer({id: offer._id})" class = 'offer-link'>
@@ -22,7 +23,7 @@
 </div>
 <div class = 'cameraButton'>
     <div class="" id= "capture"  >
-        <button id="btn-camera-upload" type="button" class="btn btn-l btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" capture="camera" ng-show="$ctrl.isLoggedIn()">
+        <button id="btn-camera-upload" type="button" class="btn btn-l btn-block" ngf-select="$ctrl.uploadPicture($file)" ng-model="$ctrl.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 420, height: 420, centerCrop:true}" ngf-fix-orientation="true" capture="camera" ng-show="$ctrl.isLoggedIn()">
             <span class="glyphicon glyphicon-camera"></span>
             Create an offer
         </button>

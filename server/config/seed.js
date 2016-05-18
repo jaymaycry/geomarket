@@ -71,6 +71,7 @@ User.find({}).remove()
             price: 100,
             viewCounter: 0,
             comments:[ {
+              _creator: creatorId,
               date: Date.now(),
               text: "this is an example comment"
             }],

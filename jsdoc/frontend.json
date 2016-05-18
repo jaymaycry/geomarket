@@ -1,0 +1,35 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "include": ["./client/app/main/main.controller.js",
+                    "./client/app/createOffering/createOffering.controller.js",
+                    "./client/app/editOffer/editOffer.controller.js",
+                    "./client/app/detailOffer/detailOffer.controller.js",
+                    "./client/app/detailOffer/deleteOffer/deleteOffer.controller.js",
+                    "./client/app/detailOffer/sellOffer/sellOffer.controller.js",
+                    "./client/app/myOffers/myOffers.controller.js",
+                    "./client/app/offer/offer.service.js",
+                    "./client/app/account/login/login.controller.js",
+                    "./client/app/account/settings/settings.controller.js",
+                    "./client/app/admin/admin.controller.js"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+    "template": "templates/default",  
+    "encoding": "utf8",               
+    "destination": "./jsdoc/frontend/",
+    "recurse": true
+    },
+
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}
+
+

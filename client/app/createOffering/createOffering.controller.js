@@ -20,6 +20,8 @@
             this.invalidEndDate = false;
             this.invalidPrice = false;
             this.invalidName = false;
+            this.showSpinner = true;
+            this.showInfo = false;
         }
         /**
          * @description Initialize the offer
@@ -29,6 +31,7 @@
             this.$geolocation.getCurrentPosition({
                 timeout: 6000
             }).then(position => {
+                this.showSpinner = false;
                 this.position = position;
                 this.offer = new this.Offer();
                 this.offer.loc = [position.coords.longitude, position.coords.latitude];
@@ -36,6 +39,10 @@
                 this.offer.endDate = new Date();
                 this.offer.endDate.setDate(this.offer.endDate.getDate() + 1);
                 this.file = this.$state.params.obj;
+            })
+            .catch(() => {
+                this.showSpinner = false;
+                this.showInfo = true;
             });
         }
         /**

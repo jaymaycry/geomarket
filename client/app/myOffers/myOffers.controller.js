@@ -15,12 +15,19 @@
             this.offers;
             this.isLoggedIn = Auth.isLoggedIn;
             this.file;
+            this.showInfo = false;
+            this.showSpinner = true;
         }
         /**
         * @description Loads all offers from the logged in user.
         */
         $onInit() {
-            this.offers = this.Offer.my();
+            this.offers = this.Offer.my({}, (offers) => {
+                    this.showSpinner = false;
+                    if (offers.length === 0) {
+                        this.showInfo = true;
+                    }
+                });
         }
         /**
         * @description Gives the status of a given offer object..

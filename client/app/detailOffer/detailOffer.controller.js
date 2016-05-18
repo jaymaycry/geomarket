@@ -68,10 +68,11 @@
          * @returns {string} The CSS class for the comment.
          */
         commentClass(creatorId) {
+            console.log("CREATORID:"+creatorId+" OFFERCREATOR:"+this.offer._creator+" CURRENTUSERID:"+this.getCurrentUser()._id);
             if (creatorId === this.offer._creator) {
                 return "comment-creator";
             }
-            if (creatorId === this.getCurrentUser._id) {
+            if (creatorId === this.getCurrentUser()._id) {
                 return "comment-self";
             }
         }
