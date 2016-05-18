@@ -14,7 +14,8 @@ swagger.noteEndpoint('/uploads', swaggerdoc.post, "Uploads");
 // Upload File
 
 function uploadFile(req, res, next){
-    return res.status(200).json(req.file.path);
+    console.log(req);
+    return res.status(200).json("/uploads/"+req.file.gridfsEntry.filename);
 }
 
 swagger.noteEndpoint('/uploads/{filename}', swaggerdoc.get, "Uploads");
